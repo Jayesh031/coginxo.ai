@@ -139,7 +139,7 @@ export default function Navbar() {
                         >
                             <Link 
                                 href="/" 
-                                className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 text-transparent bg-clip-text  transition-all duration-300"
+                                className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-700 text-transparent bg-clip-text  transition-all duration-300"
                                 aria-label="Cognixo.ai - AI Solutions Company Homepage"
                             >
                                 Cognixo.ai
@@ -226,7 +226,7 @@ export default function Navbar() {
                                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                                 exit={{ opacity: 0, y: -10, scale: 0.95 }}
                                                 transition={{ duration: 0.2, ease: "easeOut" }}
-                                                className="absolute top-full left-0 mt-4 w-52 rounded-xl overflow-hidden shadow-2xl z-50"
+                                                className="absolute top-full left-0 mt-4 w-52 rounded-xl overflow-hidden shadow-2xl z-100"
                                                 style={{
                                                     background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(59, 130, 246, 0.25) 50%, rgba(99, 102, 241, 0.25) 100%)',
                                                     backdropFilter: 'blur(20px)',
