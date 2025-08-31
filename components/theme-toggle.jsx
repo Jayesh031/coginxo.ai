@@ -27,7 +27,7 @@ export default function ThemeToggle({ className = "" }) {
         className="absolute inset-0 rounded-full bg-blue-50 dark:bg-blue-900/30"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.9 }} // slower background overlay fade
+        transition={{ duration: 1.2 }} // slower background overlay fade
       />
       <span className="absolute inset-[2px] rounded-full bg-gradient-to-b from-white to-gray-100 dark:from-gray-800 dark:to-gray-900" />
       <motion.span
@@ -35,10 +35,10 @@ export default function ThemeToggle({ className = "" }) {
         layout
         transition={{
           type: "spring",
-          stiffness: 80, // softer spring
-          damping: 28, // smoother settling
-          mass: 1.6,
-          rotate: { duration: 0.9, ease: "easeInOut" }, // slower rotate
+          stiffness: 60, // softer spring than before
+          damping: 30, // smoother settling
+          mass: 1.7,
+          rotate: { duration: 1.1, ease: "easeInOut" }, // slower rotate
         }}
         animate={{ x: isDark ? 28 : 0, rotate: isDark ? 360 : 0 }}
       >
@@ -55,7 +55,7 @@ export default function ThemeToggle({ className = "" }) {
               initial={{ scale: 0.6, opacity: 0, rotate: -45 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
               exit={{ scale: 0.6, opacity: 0, rotate: 45 }}
-              transition={{ duration: 0.7, ease: "easeOut" }} // slower icon transition
+              transition={{ duration: 1.0, ease: "easeOut" }} // slower icon transition
             >
               <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
             </motion.svg>
@@ -71,7 +71,7 @@ export default function ThemeToggle({ className = "" }) {
               initial={{ scale: 0.6, opacity: 0, rotate: 45 }}
               animate={{ scale: 1, opacity: 1, rotate: 0 }}
               exit={{ scale: 0.6, opacity: 0, rotate: -45 }}
-              transition={{ duration: 0.7, ease: "easeOut" }} // slower icon transition
+              transition={{ duration: 1.0, ease: "easeOut" }} // slower icon transition
             >
               <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zm9-10v-2h-3v2h3zm-3.05-7.95l1.79-1.8-1.41-1.41-1.8 1.79 1.42 1.42zM12 6a6 6 0 100 12A6 6 0 0012 6zM4.22 18.36l-1.8 1.79 1.41 1.41 1.79-1.8-1.4-1.4zM17.24 19.16l1.42 1.42 1.79-1.8-1.41-1.41-1.8 1.79z" />
             </motion.svg>

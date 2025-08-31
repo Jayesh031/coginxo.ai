@@ -117,7 +117,7 @@ export default function ProcessSection() {
                 Our Process
               </span>
             </h2>
-            <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto">
               A proven methodology that delivers exceptional AI solutions.
             </p>
           </motion.div>
@@ -138,8 +138,8 @@ export default function ProcessSection() {
                   variants={cardVariant}
                 >
                   <motion.div
-                    className="bg-gradient-to-br from-white/80 to-gray-100/80 backdrop-blur-lg 
-                               rounded-2xl p-6 md:p-8 border border-gray-200/50 
+                    className="bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-slate-900/60 dark:to-slate-800/60 backdrop-blur-lg 
+                               rounded-2xl p-6 md:p-8 border border-gray-200/50 dark:border-slate-700/60 
                                text-center flex flex-col h-full w-full relative overflow-hidden"
                     whileHover={{ y: -5, scale: 1.02 }}
                   >
@@ -162,10 +162,14 @@ export default function ProcessSection() {
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-900 dark:text-slate-100">
+                      {step.title}
+                    </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm md:text-base flex-grow">{step.description}</p>
+                    <p className="text-gray-600 dark:text-slate-300 text-sm md:text-base flex-grow">
+                      {step.description}
+                    </p>
                   </motion.div>
 
                   {/* Connector (desktop) */}
@@ -225,10 +229,10 @@ export default function ProcessSection() {
                     </motion.div>
 
                     <div>
-                      <h3 className="text-lg md:text-xl font-bold mb-1 text-gray-800 group-hover:text-cyan-500 transition-colors">
+                      <h3 className="text-lg md:text-xl font-bold mb-1 text-gray-800 dark:text-slate-100 group-hover:text-cyan-500 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 text-sm md:text-base">{item.desc}</p>
+                      <p className="text-gray-600 dark:text-slate-300 text-sm md:text-base">{item.desc}</p>
                     </div>
                   </motion.div>
                 )
@@ -270,8 +274,8 @@ export default function ProcessSection() {
           >
             {/* Main Container with Floating Animation */}
             <motion.div
-              className="w-full h-64 md:h-96 bg-gradient-to-br from-cyan-200/40 via-blue-200/40 to-indigo-200/40 
-               rounded-3xl backdrop-blur-lg border border-gray-200 relative overflow-hidden"
+              className="w-full h-64 md:h-96 bg-gradient-to-br from-cyan-200/40 via-blue-200/40 to-indigo-200/40 dark:from-cyan-900/30 dark:via-blue-900/30 dark:to-indigo-900/30 
+               rounded-3xl backdrop-blur-lg border border-gray-200 dark:border-slate-700 relative overflow-hidden"
               animate={floatingAnimation}
             >
               {/* Center Image */}

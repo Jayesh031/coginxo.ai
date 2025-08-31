@@ -17,7 +17,7 @@ export default function Footer() {
         animationDelay: `${delay}s`,
       }}
     >
-      <Icon className="w-8 h-8 text-blue-400" />
+      <Icon className="w-8 h-8 text-blue-400 dark:text-blue-300" />
     </div>
   )
 
@@ -47,7 +47,7 @@ export default function Footer() {
 
       <footer className="relative w-full overflow-hidden" role="contentinfo">
         {/* Animated background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-[#0a0f1a] dark:via-[#0a0f1a] dark:to-[#0a0f1a]">
           {/* Floating AI icons */}
           <FloatingAIIcon icon={Brain} className="top-10 left-1/4" delay={0} />
           <FloatingAIIcon icon={Cpu} className="top-32 right-1/3" delay={2} />
@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
 
         {/* Main content */}
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 border-t-4 border-violet-600">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 border-t-4 border-violet-600 dark:border-white/20">
           <div className="grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-12">
             {/* Brand section - left side */}
             <div className="lg:col-span-5 xl:col-span-4">
@@ -78,7 +78,7 @@ export default function Footer() {
                 <div className="mt-2 h-1 w-16 bg-gradient-to-r from-blue-500 to-violet-500 rounded-full group-hover:w-24 transition-all duration-300"></div>
               </div>
 
-              <p className="mt-4 sm:mt-6 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed">
+              <p className="mt-4 sm:mt-6 text-gray-700 dark:text-slate-300 text-sm sm:text-base lg:text-lg leading-relaxed">
                 Transforming businesses with cutting-edge AI technology. From machine learning models to intelligent
                 automation - we make AI work for you.
               </p>
@@ -87,7 +87,7 @@ export default function Footer() {
               <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
                 <a
                   href="mailto:contact@aisolutionspro.com"
-                  className="group flex items-center text-gray-700 transition-all hover:text-blue-600"
+                  className="group flex items-center text-gray-700 dark:text-slate-300 transition-all hover:text-blue-600 dark:hover:text-blue-400"
                   aria-label="Send email to AI Solutions Pro"
                 >
                   <div className="flex h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-violet-300 text-black group-hover:from-blue-600 group-hover:to-violet-600 group-hover:text-white transition-all duration-300 group-hover:scale-110">
@@ -98,7 +98,7 @@ export default function Footer() {
 
                 <a
                   href="tel:+1234567890"
-                  className="group flex items-center text-gray-700 transition-all hover:text-blue-600"
+                  className="group flex items-center text-gray-700 dark:text-slate-300 transition-all hover:text-blue-600 dark:hover:text-blue-400"
                   aria-label="Call AI Solutions Pro"
                 >
                   <div className="flex h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 items-center justify-center rounded-xl bg-gradient-to-r from-cyan-400 to-violet-300 text-black group-hover:from-blue-600 group-hover:to-violet-600 group-hover:text-white transition-all duration-300 group-hover:scale-110">
@@ -145,8 +145,8 @@ export default function Footer() {
               <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
                 {/* AI Solutions column */}
                 <div className="space-y-4">
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                    <Bot className="mr-2 h-5 w-5 text-blue-600" />
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-slate-100 flex items-center">
+                    <Bot className="mr-2 h-5 w-5 text-blue-600 dark:text-blue-400" />
                     AI Solutions
                   </h3>
                   <nav aria-label="AI Solutions">
@@ -161,9 +161,9 @@ export default function Footer() {
                         <li key={item}>
                           <a
                             href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                            className="group flex items-center text-sm sm:text-base text-gray-600 transition-all hover:text-blue-600 focus:text-blue-600 focus:outline-none"
+                            className="group flex items-center text-sm sm:text-base text-gray-600 dark:text-slate-300 transition-all hover:text-blue-600 dark:hover:text-blue-400 focus:text-blue-600 focus:outline-none"
                           >
-                            <ChevronRight className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 text-blue-400 group-hover:text-blue-600 transition-transform group-hover:translate-x-1" />
+                            <ChevronRight className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 text-blue-400 dark:text-blue-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-transform group-hover:translate-x-1" />
                             {item}
                           </a>
                         </li>
@@ -174,8 +174,8 @@ export default function Footer() {
 
                 {/* Services column */}
                 <div className="space-y-4">
-                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 flex items-center">
-                    <Cpu className="mr-2 h-5 w-5 text-violet-600" />
+                  <h3 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-slate-100 flex items-center">
+                    <Cpu className="mr-2 h-5 w-5 text-violet-600 dark:text-violet-400" />
                     Services
                   </h3>
                   <nav aria-label="Services">
@@ -190,9 +190,9 @@ export default function Footer() {
                         <li key={item}>
                           <a
                             href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                            className="group flex items-center text-sm sm:text-base text-gray-600 transition-all hover:text-violet-600 focus:text-violet-600 focus:outline-none"
+                            className="group flex items-center text-sm sm:text-base text-gray-600 dark:text-slate-300 transition-all hover:text-violet-600 dark:hover:text-violet-400 focus:text-violet-600 focus:outline-none"
                           >
-                            <ChevronRight className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 text-violet-400 group-hover:text-violet-600 transition-transform group-hover:translate-x-1" />
+                            <ChevronRight className="mr-1 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4 text-violet-400 dark:text-violet-300 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-transform group-hover:translate-x-1" />
                             {item}
                           </a>
                         </li>
@@ -203,12 +203,12 @@ export default function Footer() {
 
                 {/* Quick Contact section */}
                 <div className="md:col-span-2 xl:col-span-1 mt-6 xl:mt-0">
-                  <div className="rounded-2xl bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 p-4 sm:p-6 lg:p-8 shadow-xl border border-blue-100">
+                  <div className="rounded-2xl bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-800 p-4 sm:p-6 lg:p-8 shadow-xl border border-blue-100 dark:border-slate-700">
                     <div className="flex items-center space-x-3">
                       <div className="flex h-10 w-10 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white animate-pulse-glow">
                         <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
-                      <h3 className="text-lg sm:text-lg font-bold text-gray-900">Let's Talk AI</h3>
+                      <h3 className="text-lg sm:text-lg font-bold text-gray-900 dark:text-slate-100">Let's Talk AI</h3>
                     </div>
 
                     {/* <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
@@ -223,12 +223,14 @@ export default function Footer() {
                     </div>
 
                     <div className="mt-4 sm:mt-6 text-center">
-                      <p className="text-xs sm:text-sm text-gray-600 mb-3">Scan for instant chat or:</p>
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-slate-300 mb-3">
+                        Scan for instant chat or:
+                      </p>
                       <a
                         href="https://wa.me/1234567890"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-500 via-violet-500 to-blue-500 animate-gradient-shift px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold text-white shadow-lg transition-all hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="inline-flex items-center rounded-full bg-gradient-to-r from-blue-500 via-violet-500 to-blue-500 animate-gradient-shift px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base font-semibold text-white dark:text-slate-100 shadow-lg transition-all hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         aria-label="Start WhatsApp conversation"
                       >
                         <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
@@ -243,12 +245,14 @@ export default function Footer() {
 
           {/* Bottom section */}
           <div className="mt-12 sm:mt-10 lg:mt-12">
-            <div className="flex flex-col items-center justify-between border-t border-black pt-6 sm:pt-4 lg:pt-5 md:flex-row">
+            <div className="flex flex-col items-center justify-between border-t border-black dark:border-white/20 pt-6 sm:pt-4 lg:pt-5 md:flex-row">
               <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                <p className="text-xs sm:text-sm lg:text-base text-gray-600">
+                <p className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-slate-300">
                   © {new Date().getFullYear()} AI Solutions Pro. All rights reserved.
                 </p>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-0">Powered by Advanced AI Technology</p>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-slate-400 mt-1 sm:mt-0">
+                  Powered by Advanced AI Technology
+                </p>
               </div>
 
               <nav
@@ -257,13 +261,13 @@ export default function Footer() {
               >
                 <a
                   href="/privacy-policy"
-                  className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-blue-600 transition-colors focus:text-blue-600 focus:outline-none"
+                  className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:text-blue-600 focus:outline-none"
                 >
                   Privacy Policy
                 </a>
                 <a
                   href="/terms-of-service"
-                  className="text-xs sm:text-sm lg:text-base text-gray-600 hover:text-blue-600 transition-colors focus:text-blue-600 focus:outline-none"
+                  className="text-xs sm:text-sm lg:text-base text-gray-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors focus:text-blue-600 focus:outline-none"
                 >
                   Terms of Service
                 </a>

@@ -75,7 +75,7 @@ export default function ServicesSection() {
               Our Services
             </span>
           </h2>
-          <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
+          <p className="text-base md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto px-4">
             Comprehensive AI solutions tailored to revolutionize your business operations.
           </p>
         </motion.div>
@@ -100,8 +100,8 @@ export default function ServicesSection() {
                   className="block w-full focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-2xl"
                 >
                   <motion.div
-                    className="flex flex-col justify-between bg-gradient-to-br from-white/80 to-gray-100/80 
-                               backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-gray-200/50 
+                    className="flex flex-col justify-between bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-slate-900/60 dark:to-slate-800/60 
+                               backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-gray-200/50 dark:border-slate-700/60 
                                hover:border-cyan-400/50 transition-all duration-300 
                                h-full relative overflow-hidden cursor-pointer"
                     whileHover={{ y: -10, scale: 1.02 }}
@@ -124,21 +124,18 @@ export default function ServicesSection() {
                     </motion.div>
 
                     {/* Title */}
-                    <h3
-                      className="text-lg md:text-2xl font-bold mb-3 md:mb-4 text-gray-900 
-                                   group-hover:text-cyan-400 transition-colors relative z-10"
-                    >
+                    <h3 className="text-lg md:text-2xl font-bold mb-3 md:mb-4 text-gray-900 dark:text-slate-100 group-hover:text-cyan-400 dark:group-hover:text-cyan-300 relative z-10">
                       {service.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 leading-relaxed relative z-10 text-sm md:text-base mb-4 flex-grow">
+                    <p className="text-gray-600 dark:text-slate-300 leading-relaxed relative z-10 text-sm md:text-base mb-4 flex-grow">
                       {service.description}
                     </p>
 
                     {/* CTA */}
                     <motion.div
-                      className="flex items-center text-cyan-400 font-semibold text-sm md:text-base relative z-10 mt-auto"
+                      className="flex items-center text-cyan-400 dark:text-cyan-300 font-semibold text-sm md:text-base relative z-10 mt-auto"
                       whileHover={{ x: 5 }}
                     >
                       Learn More

@@ -208,15 +208,14 @@ const HeroSection = () => {
   }, [])
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-white via-sky-50 to-indigo-100 overflow-hidden pt-12 md:pt-20">
+    <section className="relative min-h-screen bg-gradient-to-br from-white via-sky-50 to-indigo-100 dark:from-[#0b1220] dark:via-[#0b1220]/80 dark:to-[#0b1220] overflow-hidden pt-12 md:pt-20">
       {/* Background Animated Icons */}
       {isMounted && (
         <div className="absolute inset-0 overflow-hidden">
           {iconPositions.map((pos, i) => (
             <div
               key={`icon-${i}`}
-              className={`absolute rounded-lg bg-gradient-to-br ${pos.icon.color} 
-                          backdrop-blur-sm flex items-center justify-center text-indigo-600/70 animate-float-background`}
+              className={`absolute rounded-lg bg-gradient-to-br ${pos.icon.color} backdrop-blur-sm flex items-center justify-center text-indigo-600/70 dark:text-indigo-300/70 animate-float-background`}
               style={{ width: pos.size, height: pos.size, left: pos.x, top: pos.y }}
             >
               {pos.icon.icon}
@@ -225,7 +224,7 @@ const HeroSection = () => {
           {codePositions.map((pos, i) => (
             <div
               key={`code-${i}`}
-              className="absolute text-xs sm:text-sm md:text-base font-mono text-indigo-600/50 animate-code-float"
+              className="absolute text-xs sm:text-sm md:text-base font-mono text-indigo-600/50 dark:text-indigo-300/60 animate-code-float"
               style={{ left: pos.x, top: pos.y }}
             >
               {pos.text}
@@ -263,19 +262,19 @@ const HeroSection = () => {
 
         {/* Right */}
         <div className="space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center space-x-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2 text-blue-700 border border-blue-200 shadow-sm">
+          <div className="inline-flex items-center space-x-2 bg-white/70 dark:bg-slate-800/60 backdrop-blur-sm rounded-full px-4 py-2 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-800/50 shadow-sm">
             <Zap className="w-4 h-4" />
             <span className="text-sm font-medium">AI-Powered Innovation</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-slate-100 leading-tight">
             Transform Your{" "}
             <span className="block bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-700 bg-clip-text text-transparent">
               Business with AI
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-slate-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
             Unlock the power of artificial intelligence with our cutting-edge solutions. Drive innovation, optimize
             operations, and stay ahead of the competition.
           </p>
@@ -285,7 +284,7 @@ const HeroSection = () => {
               <span>Get Started</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
-            <button className="group border-2 border-blue-500 text-blue-600 px-8 py-3 rounded-full font-semibold flex items-center justify-center space-x-2 bg-white/50 backdrop-blur-sm hover:bg-blue-500 hover:text-white transition-all">
+            <button className="group border-2 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-300 px-8 py-3 rounded-full font-semibold flex items-center justify-center space-x-2 bg-white/50 dark:bg-slate-800/60 backdrop-blur-sm hover:bg-blue-500 dark:hover:bg-blue-500 hover:text-white transition-all">
               {/* <Play className="w-5 h-5" /> */}
               <span>Our Services</span>
             </button>
@@ -296,7 +295,7 @@ const HeroSection = () => {
             {[{ text: "500+ Projects" }, { text: "98% Success Rate" }, { text: "24/7 Support" }].map((item, idx) => (
               <div key={idx} className="flex items-center space-x-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
-                <span className="text-sm sm:text-base text-gray-600">{item.text}</span>
+                <span className="text-sm sm:text-base text-gray-600 dark:text-slate-300">{item.text}</span>
               </div>
             ))}
           </div>
