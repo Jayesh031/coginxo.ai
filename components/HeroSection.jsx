@@ -123,7 +123,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-white via-sky-50 to-indigo-100 overflow-hidden pt-12">
+    <section className="relative min-h-screen bg-gradient-to-br from-white via-sky-50 to-indigo-100 overflow-hidden pt-12 md:pt-20">
       
       {/* Background Animated Icons */}
       {isMounted && (
