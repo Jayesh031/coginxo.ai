@@ -1,37 +1,56 @@
-'use client'
-import React, { useState, useEffect } from 'react';
+"use client"
+import { useState, useEffect } from "react"
 import {
-  Brain, Zap, Target, ArrowRight, Play, CheckCircle,
-  Code, Globe, Cpu, Database, Braces, Terminal, Server,
-  Cloud, Lock, LineChart, GitBranch, Settings, Shield,
-  Coffee, Wifi, Layers, Github
-} from 'lucide-react';
+  Brain,
+  Zap,
+  Target,
+  ArrowRight,
+  CheckCircle,
+  Code,
+  Database,
+  Braces,
+  Terminal,
+  Server,
+  Cloud,
+  Lock,
+  LineChart,
+  GitBranch,
+  Settings,
+  Shield,
+  Coffee,
+  Wifi,
+  Layers,
+  Github,
+} from "lucide-react"
 
 // Minimal motion mock (replaces framer-motion in environments where it's not available)
 const motion = {
   div: ({ children, className = "", ...props }) => (
-    <div className={`${className} animate-fade-in`} {...props}>{children}</div>
+    <div className={`${className} animate-fade-in`} {...props}>
+      {children}
+    </div>
   ),
   h1: ({ children, className = "", ...props }) => (
-    <h1 className={`${className} animate-slide-up`} {...props}>{children}</h1>
+    <h1 className={`${className} animate-slide-up`} {...props}>
+      {children}
+    </h1>
   ),
   p: ({ children, className = "", ...props }) => (
-    <p className={`${className} animate-slide-up-delay`} {...props}>{children}</p>
+    <p className={`${className} animate-slide-up-delay`} {...props}>
+      {children}
+    </p>
   ),
   button: ({ children, className = "", ...props }) => (
-    <button
-      className={`${className} transition-all duration-300 hover:scale-105 active:scale-95`}
-      {...props}
-    >
+    <button className={`${className} transition-all duration-300 hover:scale-105 active:scale-95`} {...props}>
       {children}
     </button>
   ),
-};
+}
 
 const HeroSection = () => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [iconPositions, setIconPositions] = useState([]);
-  const [codePositions, setCodePositions] = useState([]);
+  const [isMounted, setIsMounted] = useState(false)
+  const [iconPositions, setIconPositions] = useState([])
+  const [codePositions, setCodePositions] = useState([])
 
   // Tech icons with colors
   const techIcons = [
@@ -51,80 +70,145 @@ const HeroSection = () => {
     { icon: <Github size={20} />, color: "from-slate-300/20 to-slate-400/20" },
     { icon: <Wifi size={20} />, color: "from-cyan-300/20 to-cyan-400/20" },
     { icon: <Layers size={20} />, color: "from-pink-300/20 to-pink-400/20" },
-  ];
+  ]
 
-   // AI and tech-related text snippets
+  // AI and tech-related text snippets
   const codeShapes = [
-    "{ }", "[ ]", "( )", "</>", "//", "def()", "=>", "function()", "import", "class",
-    "const", "let", "var", "async", "await", "if()", "for()", "while()", ".then()", 
-    "useState", "useEffect", "API", "JSON", "export", "props", "callback", "git", "docker",
-    "Pandas", "Numpy", "TensorFlow", "PyTorch", "OpenAI", "GPT", "LLM", "ML", "AI",
-    "Deep Learning", "Neural Net", "Algorithm", "BigData", "Analytics", "Automation",
-    "ChatBot", "NLP", "Computer Vision", "Scikit-learn", "Keras", "model.fit()",
-    "predict()", "train()", "accuracy", "loss", "epoch", "batch", "gradient",
-    "backprop", "transformer", "attention", "embedding", "tokenize", "fine-tune",
-    "inference", "deployment", "MLOps", "pipeline", "feature", "dataset", "supervised",
-    "unsupervised", "reinforcement", "classification", "regression", "clustering"
-  ];
+    "{ }",
+    "[ ]",
+    "( )",
+    "</>",
+    "//",
+    "def()",
+    "=>",
+    "function()",
+    "import",
+    "class",
+    "const",
+    "let",
+    "var",
+    "async",
+    "await",
+    "if()",
+    "for()",
+    "while()",
+    ".then()",
+    "useState",
+    "useEffect",
+    "API",
+    "JSON",
+    "export",
+    "props",
+    "callback",
+    "git",
+    "docker",
+    "Pandas",
+    "Numpy",
+    "TensorFlow",
+    "PyTorch",
+    "OpenAI",
+    "GPT",
+    "LLM",
+    "ML",
+    "AI",
+    "Deep Learning",
+    "Neural Net",
+    "Algorithm",
+    "BigData",
+    "Analytics",
+    "Automation",
+    "ChatBot",
+    "NLP",
+    "Computer Vision",
+    "Scikit-learn",
+    "Keras",
+    "model.fit()",
+    "predict()",
+    "train()",
+    "accuracy",
+    "loss",
+    "epoch",
+    "batch",
+    "gradient",
+    "backprop",
+    "transformer",
+    "attention",
+    "embedding",
+    "tokenize",
+    "fine-tune",
+    "inference",
+    "deployment",
+    "MLOps",
+    "pipeline",
+    "feature",
+    "dataset",
+    "supervised",
+    "unsupervised",
+    "reinforcement",
+    "classification",
+    "regression",
+    "clustering",
+  ]
 
   useEffect(() => {
-    setIsMounted(true);
+    setIsMounted(true)
 
     const calculatePositions = () => {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+      const vw = window.innerWidth
+      const vh = window.innerHeight
 
-      const gridCols = vw < 640 ? 4 : vw < 1024 ? 5 : 6;
-      const gridRows = vh < 600 ? 4 : vh < 800 ? 5 : 6;
-      const cellW = vw / gridCols;
-      const cellH = vh / gridRows;
+      const gridCols = vw < 640 ? 4 : vw < 1024 ? 5 : 6
+      const gridRows = vh < 600 ? 4 : vh < 800 ? 5 : 6
+      const cellW = vw / gridCols
+      const cellH = vh / gridRows
 
-      const grid = Array(gridRows).fill().map(() => Array(gridCols).fill(false));
-      const icons = [];
-      const codes = [];
+      const grid = Array(gridRows)
+        .fill()
+        .map(() => Array(gridCols).fill(false))
+      const icons = []
+      const codes = []
 
-      const maxIcons = vw < 640 ? 15 : vw < 1024 ? 22 : 30;
-      const maxCodes = vw < 640 ? 25 : vw < 1024 ? 35 : 50;
+      const maxIcons = vw < 640 ? 15 : vw < 1024 ? 22 : 30
+      const maxCodes = vw < 640 ? 25 : vw < 1024 ? 35 : 50
 
       const getRandomPos = (row, col) => ({
         x: col * cellW + Math.random() * (cellW * 0.7),
         y: row * cellH + Math.random() * (cellH * 0.7),
-      });
+      })
 
-      let count = 0;
+      let count = 0
       for (let r = 0; r < gridRows && count < maxIcons; r++) {
         for (let c = 0; c < gridCols && count < maxIcons; c++) {
-          if (Math.random() > 0.4) continue;
-          const pos = getRandomPos(r, c);
-          const size = (vw < 640 ? 35 : vw < 1024 ? 65 : 85) + Math.random() * 20;
-          icons.push({ ...pos, size, icon: techIcons[Math.floor(Math.random() * techIcons.length)] });
-          grid[r][c] = true;
-          count++;
+          if (Math.random() > 0.4) continue
+          const pos = getRandomPos(r, c)
+          const size = (vw < 640 ? 35 : vw < 1024 ? 65 : 85) + Math.random() * 20
+          icons.push({ ...pos, size, icon: techIcons[Math.floor(Math.random() * techIcons.length)] })
+          grid[r][c] = true
+          count++
         }
       }
 
-      count = 0;
+      count = 0
       for (let r = 0; r < gridRows && count < maxCodes; r++) {
         for (let c = 0; c < gridCols && count < maxCodes; c++) {
-          if (grid[r][c] || Math.random() > 0.5) continue;
-          const pos = getRandomPos(r, c);
-          codes.push({ ...pos, text: codeShapes[Math.floor(Math.random() * codeShapes.length)] });
-          count++;
+          if (grid[r][c] || Math.random() > 0.5) continue
+          const pos = getRandomPos(r, c)
+          codes.push({ ...pos, text: codeShapes[Math.floor(Math.random() * codeShapes.length)] })
+          count++
         }
       }
 
-      setIconPositions(icons);
-      setCodePositions(codes);
-    };
+      setIconPositions(icons)
+      setCodePositions(codes)
+    }
 
-    calculatePositions();
-    window.addEventListener('resize', calculatePositions);
-    return () => window.removeEventListener('resize', calculatePositions);
-  }, []);
+    calculatePositions()
+    window.addEventListener("resize", calculatePositions)
+    return () => window.removeEventListener("resize", calculatePositions)
+  }, [])
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-white via-sky-50 to-indigo-100 overflow-hidden pt-12 md:pt-20">
-      
       {/* Background Animated Icons */}
       {isMounted && (
         <div className="absolute inset-0 overflow-hidden">
@@ -151,8 +235,7 @@ const HeroSection = () => {
       )}
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid lg:grid-cols-2 gap-10 items-center">    
-        
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20 grid lg:grid-cols-2 gap-10 items-center">
         {/* Left - AI Brain Graphic */}
         <div className="relative flex justify-center lg:justify-start">
           <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
@@ -193,8 +276,8 @@ const HeroSection = () => {
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0">
-            Unlock the power of artificial intelligence with our cutting-edge solutions. 
-            Drive innovation, optimize operations, and stay ahead of the competition.
+            Unlock the power of artificial intelligence with our cutting-edge solutions. Drive innovation, optimize
+            operations, and stay ahead of the competition.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -210,11 +293,7 @@ const HeroSection = () => {
 
           {/* Trust indicators */}
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-6">
-            {[
-              { text: "500+ Projects" },
-              { text: "98% Success Rate" },
-              { text: "24/7 Support" }
-            ].map((item, idx) => (
+            {[{ text: "500+ Projects" }, { text: "98% Success Rate" }, { text: "24/7 Support" }].map((item, idx) => (
               <div key={idx} className="flex items-center space-x-2">
                 <CheckCircle className="w-5 h-5 text-green-500" />
                 <span className="text-sm sm:text-base text-gray-600">{item.text}</span>
@@ -245,7 +324,7 @@ const HeroSection = () => {
         .animate-spin-reverse{animation:spin-reverse 15s linear infinite;}
       `}</style>
     </section>
-  );
-};
+  )
+}
 
-export default HeroSection;
+export default HeroSection

@@ -1,53 +1,43 @@
-"use client";
+"use client"
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import {
-  Target,
-  Lightbulb,
-  Code,
-  Rocket,
-  Users,
-  Zap,
-  Sparkles,
-  Shield,
-} from "lucide-react";
-import Link from "next/link";
+import { motion, useInView } from "framer-motion"
+import { useRef, useState, useEffect } from "react"
+import { Target, Lightbulb, Code, Rocket, Users, Zap, Sparkles, Shield } from "lucide-react"
+import Link from "next/link"
 
 // Detects mobile viewport
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(false)
   useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < 768); // md breakpoint
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-  return isMobile;
+    const checkScreen = () => setIsMobile(window.innerWidth < 768) // md breakpoint
+    checkScreen()
+    window.addEventListener("resize", checkScreen)
+    return () => window.removeEventListener("resize", checkScreen)
+  }, [])
+  return isMobile
 }
 
 export default function ProcessSection() {
-  const processRef = useRef(null);
-  const processInView = useInView(processRef, { margin: "-100px" });
-  const whyChooseUsRef = useRef(null);
+  const processRef = useRef(null)
+  const processInView = useInView(processRef, { margin: "-100px" })
+  const whyChooseUsRef = useRef(null)
   const whyChooseUsInView = useInView(whyChooseUsRef, {
     margin: "-50px",
     once: false,
-  });
-  const isMobile = useIsMobile();
+  })
+  const isMobile = useIsMobile()
 
-  const [animate, setAnimate] = useState(false);
+  const [animate, setAnimate] = useState(false)
   useEffect(() => {
-    setAnimate(processInView);
-  }, [processInView]);
+    setAnimate(processInView)
+  }, [processInView])
 
   // Data
   const steps = [
     {
       icon: Target,
       title: "Discovery & Analysis",
-      description:
-        "We analyze your business needs and identify AI opportunities.",
+      description: "We analyze your business needs and identify AI opportunities.",
       step: "01",
     },
     {
@@ -68,7 +58,7 @@ export default function ProcessSection() {
       description: "Continuous monitoring and improvement of AI systems.",
       step: "04",
     },
-  ];
+  ]
 
   const reasons = [
     {
@@ -86,13 +76,13 @@ export default function ProcessSection() {
       title: "Expert Team",
       desc: "Work with seasoned AI professionals and industry veterans.",
     },
-  ];
+  ]
 
   // Animations
   const headingVariant = {
     hidden: { y: 50, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.8 } },
-  };
+  }
 
   // ✅ JS-only: remove TypeScript type annotation
   const cardVariant = {
@@ -103,21 +93,17 @@ export default function ProcessSection() {
       opacity: 1,
       transition: { delay: i * 0.25, duration: 0.8, ease: "easeOut" },
     }),
-  };
+  }
 
   const floatingAnimation = {
     y: [0, -20, 0],
-    transition: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-  };
+    transition: { duration: 4, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" },
+  }
 
   return (
     <>
       {/* ===== Process Section ===== */}
-      <section
-        ref={processRef}
-        className="py-16 md:py-24 px-4 md:px-6 relative z-10"
-        aria-labelledby="process-heading"
-      >
+      <section ref={processRef} className="py-16 md:py-24 px-4 md:px-6 relative z-10" aria-labelledby="process-heading">
         <div className="max-w-7xl mx-auto">
           {/* Heading */}
           <motion.div
@@ -126,10 +112,7 @@ export default function ProcessSection() {
             variants={headingVariant}
             className="text-center mb-12 md:mb-20"
           >
-            <h2
-              id="process-heading"
-              className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4"
-            >
+            <h2 id="process-heading" className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
               <span className="bg-gradient-to-r from-indigo-600 via-blue-500 to-cyan-400 bg-clip-text text-transparent">
                 Our Process
               </span>
@@ -140,12 +123,9 @@ export default function ProcessSection() {
           </motion.div>
 
           {/* Steps Grid */}
-          <div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-            role="list"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" role="list">
             {steps.map((step, i) => {
-              const Icon = step.icon;
+              const Icon = step.icon
               return (
                 <motion.article
                   key={step.step}
@@ -178,22 +158,14 @@ export default function ProcessSection() {
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <Icon
-                        size={28}
-                        className="text-white"
-                        aria-hidden="true"
-                      />
+                      <Icon size={28} className="text-white" aria-hidden="true" />
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-900">
-                      {step.title}
-                    </h3>
+                    <h3 className="text-lg md:text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm md:text-base flex-grow">
-                      {step.description}
-                    </p>
+                    <p className="text-gray-600 text-sm md:text-base flex-grow">{step.description}</p>
                   </motion.div>
 
                   {/* Connector (desktop) */}
@@ -205,7 +177,7 @@ export default function ProcessSection() {
                     />
                   )}
                 </motion.article>
-              );
+              )
             })}
           </div>
         </div>
@@ -225,10 +197,7 @@ export default function ProcessSection() {
             animate={whyChooseUsInView ? { x: 0, opacity: 1 } : { x: -100, opacity: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2
-              id="why-choose-heading"
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12"
-            >
+            <h2 id="why-choose-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12">
               <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent">
                 Why Choose Us?
               </span>
@@ -236,12 +205,12 @@ export default function ProcessSection() {
 
             <div className="space-y-6 md:space-y-8">
               {reasons.map((item, i) => {
-                const Icon = item.icon;
+                const Icon = item.icon
                 return (
                   <motion.div
                     key={item.title}
                     initial={{ x: -50, opacity: 0 }}
-                    animate={whyChooseUsInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0}}
+                    animate={whyChooseUsInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0 }}
                     transition={{ delay: i * 0.2, duration: 0.6 }}
                     className="flex items-start gap-4 group"
                     whileHover={{ x: 10 }}
@@ -252,23 +221,17 @@ export default function ProcessSection() {
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.5 }}
                     >
-                      <Icon
-                        size={22}
-                        className="text-white"
-                        aria-hidden="true"
-                      />
+                      <Icon size={22} className="text-white" aria-hidden="true" />
                     </motion.div>
 
                     <div>
                       <h3 className="text-lg md:text-xl font-bold mb-1 text-gray-800 group-hover:text-cyan-500 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 text-sm md:text-base">
-                        {item.desc}
-                      </p>
+                      <p className="text-gray-600 text-sm md:text-base">{item.desc}</p>
                     </div>
                   </motion.div>
-                );
+                )
               })}
             </div>
 
@@ -301,7 +264,7 @@ export default function ProcessSection() {
           {/* Right visual */}
           <motion.div
             initial={{ x: 100, opacity: 0 }}
-            animate={whyChooseUsInView ? { x: 0, opacity: 1 } : {x: 100, opacity: 0}}
+            animate={whyChooseUsInView ? { x: 0, opacity: 1 } : { x: 100, opacity: 0 }}
             transition={{ duration: 0.8 }}
             className="relative"
           >
@@ -326,7 +289,7 @@ export default function ProcessSection() {
               className="absolute -top-6 -right-6 w-12 h-12 md:w-16 md:h-16 bg-gradient-to-r from-yellow-400 to-orange-500 
                rounded-full flex items-center justify-center"
               animate={{ y: [0, -20, 0], rotate: [0, 180, 360] }}
-              transition={{ duration: 6, repeat: Infinity }}
+              transition={{ duration: 6, repeat: Number.POSITIVE_INFINITY }}
             >
               <Zap size={24} className="text-white" aria-hidden="true" />
             </motion.div>
@@ -335,7 +298,7 @@ export default function ProcessSection() {
               className="absolute -bottom-6 -left-6 w-16 h-16 md:w-20 md:h-20 bg-gradient-to-r from-purple-500 to-pink-500 
                rounded-full flex items-center justify-center"
               animate={{ y: [0, 20, 0], rotate: [360, 180, 0] }}
-              transition={{ duration: 5, repeat: Infinity }}
+              transition={{ duration: 5, repeat: Number.POSITIVE_INFINITY }}
             >
               <Sparkles size={32} className="text-white" aria-hidden="true" />
             </motion.div>
@@ -344,7 +307,7 @@ export default function ProcessSection() {
               className="absolute top-1/2 -left-3 w-6 h-6 md:w-8 md:h-8 bg-gradient-to-r from-green-400 to-blue-500 
                rounded-full flex items-center justify-center"
               animate={{ x: [0, 20, 0], scale: [1, 1.2, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
+              transition={{ duration: 4, repeat: Number.POSITIVE_INFINITY }}
             >
               <Shield size={12} className="text-white" aria-hidden="true" />
             </motion.div>
@@ -352,5 +315,5 @@ export default function ProcessSection() {
         </div>
       </motion.section>
     </>
-  );
+  )
 }

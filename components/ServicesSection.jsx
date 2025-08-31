@@ -28,32 +28,28 @@ export default function ServicesSection() {
     {
       icon: Brain,
       title: "AI Strategy Consulting",
-      description:
-        "Transform your business with tailored AI strategies that drive innovation and growth.",
+      description: "Transform your business with tailored AI strategies that drive innovation and growth.",
       gradient: "from-cyan-400 to-blue-500",
       href: "/services/ai-solutions",
     },
     {
       icon: Code,
       title: "Custom AI Development",
-      description:
-        "Build cutting-edge AI solutions customized to your specific business needs.",
+      description: "Build cutting-edge AI solutions customized to your specific business needs.",
       gradient: "from-blue-500 to-indigo-600",
       href: "/services/ai-solutions",
     },
     {
       icon: Database,
       title: "Machine Learning Models",
-      description:
-        "Develop and deploy sophisticated ML models that learn and adapt to your data.",
+      description: "Develop and deploy sophisticated ML models that learn and adapt to your data.",
       gradient: "from-indigo-600 to-purple-600",
       href: "/services/data-services",
     },
     {
       icon: Bot,
       title: "AI Automation",
-      description:
-        "Streamline operations with intelligent automation that works around the clock.",
+      description: "Streamline operations with intelligent automation that works around the clock.",
       gradient: "from-purple-600 to-cyan-400",
       href: "/services/consulting",
     },
@@ -74,25 +70,18 @@ export default function ServicesSection() {
           variants={headingVariants}
           className="text-center mb-12 md:mb-20"
         >
-          <h2
-            id="services-heading"
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6"
-          >
+          <h2 id="services-heading" className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
             <span className="bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 bg-clip-text text-transparent">
               Our Services
             </span>
           </h2>
           <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            Comprehensive AI solutions tailored to revolutionize your business
-            operations.
+            Comprehensive AI solutions tailored to revolutionize your business operations.
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-fr"
-          role="list"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 auto-rows-fr" role="list">
           {services.map((service, index) => {
             const Icon = service.icon
             return (
@@ -118,9 +107,11 @@ export default function ServicesSection() {
                     whileHover={{ y: -10, scale: 1.02 }}
                   >
                     {/* Background Hover Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 
+                    <div
+                      className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 
                                     to-indigo-600/10 rounded-2xl opacity-0 group-hover:opacity-100 
-                                    transition-opacity duration-300" />
+                                    transition-opacity duration-300"
+                    />
 
                     {/* Icon */}
                     <motion.div
@@ -129,16 +120,14 @@ export default function ServicesSection() {
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <Icon
-                        size={28}
-                        className="text-white md:w-8 md:h-8"
-                        aria-hidden="true"
-                      />
+                      <Icon size={28} className="text-white md:w-8 md:h-8" aria-hidden="true" />
                     </motion.div>
 
                     {/* Title */}
-                    <h3 className="text-lg md:text-2xl font-bold mb-3 md:mb-4 text-gray-900 
-                                   group-hover:text-cyan-400 transition-colors relative z-10">
+                    <h3
+                      className="text-lg md:text-2xl font-bold mb-3 md:mb-4 text-gray-900 
+                                   group-hover:text-cyan-400 transition-colors relative z-10"
+                    >
                       {service.title}
                     </h3>
 
@@ -153,11 +142,7 @@ export default function ServicesSection() {
                       whileHover={{ x: 5 }}
                     >
                       Learn More
-                      <ExternalLink
-                        size={16}
-                        className="ml-2 md:w-4 md:h-4"
-                        aria-hidden="true"
-                      />
+                      <ExternalLink size={16} className="ml-2 md:w-4 md:h-4" aria-hidden="true" />
                     </motion.div>
                   </motion.div>
                 </Link>
