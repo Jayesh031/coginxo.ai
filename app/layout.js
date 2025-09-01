@@ -6,9 +6,8 @@ import Navbar from "@/components/Navbar"
 import Footer from "@/components/Footer"
 
 export const metadata = {
-  title: "v0 App",
-  description: "Created with v0",
-  generator: "v0.app",
+  title: "Cognixo.ai",
+  description: "Created by Jayesh",
 }
 
 export default function RootLayout({ children }) {
