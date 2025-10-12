@@ -241,67 +241,95 @@ export default function AboutUs() {
         </div>
       </motion.section>
 
-      {/* Who We Are */}
+      {/* Who We Are - Diagonal Split */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
-        className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm"
+        className="relative px-4 sm:px-6 lg:px-8 py-12 sm:py-16 overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto">
-          <motion.div variants={itemVariants} className="flex items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
-            <Users className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500" />
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-slate-100">Who We Are</h2>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-indigo-500/5 dark:from-blue-500/10 dark:to-indigo-500/10" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0 100%)' }} />
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div variants={itemVariants} className="flex flex-col items-center mb-8 sm:mb-12">
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 360 }}
+              transition={{ duration: 0.6 }}
+              className="p-3 sm:p-4 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 rounded-2xl shadow-xl mb-4"
+            >
+              <Users className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
+            </motion.div>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-slate-100 text-center">Who We Are</h2>
           </motion.div>
 
-          <motion.p
+          <motion.div
             variants={itemVariants}
-            className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-slate-300 text-center max-w-4xl mx-auto leading-relaxed"
+            className="relative"
           >
-            We are a team of visionaries, data scientists, engineers, and innovators passionate about building intelligent systems that make a measurable difference. Our multidisciplinary expertise spans Machine Learning, Generative AI, Data Analytics, and Workflow Intelligence, empowering organizations to harness the full potential of data and automation.
-          </motion.p>
+            <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400/20 via-blue-500/20 to-indigo-700/20 rounded-3xl blur-2xl" />
+            <div className="relative bg-white/70 dark:bg-slate-800/70 backdrop-blur-md p-8 sm:p-10 lg:p-12 rounded-2xl sm:rounded-3xl border-2 border-blue-200/50 dark:border-blue-500/30 shadow-2xl">
+              <p className="text-base sm:text-lg md:text-xl text-gray-700 dark:text-slate-200 text-center leading-relaxed">
+                We are a team of visionaries, data scientists, engineers, and innovators passionate about building intelligent systems that make a measurable difference. Our multidisciplinary expertise spans Machine Learning, Generative AI, Data Analytics, and Workflow Intelligence, empowering organizations to harness the full potential of data and automation.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </motion.section>
 
-      {/* What We Do */}
+      {/* What We Do - Hexagonal Layout */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
-        className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20"
+        className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative"
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.h2 
             variants={fadeInVariants}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16 text-gray-900 dark:text-slate-100"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-gray-900 dark:text-slate-100"
           >
             What We Do
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Bento Grid Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4 sm:gap-6 auto-rows-fr">
             {services.map((service, index) => {
               const Icon = service.icon;
+              const layouts = [
+                "md:col-span-3 md:row-span-1", // 0
+                "md:col-span-3 md:row-span-1", // 1
+                "md:col-span-2 md:row-span-1", // 2
+                "md:col-span-2 md:row-span-1", // 3
+                "md:col-span-2 md:row-span-1"  // 4
+              ];
+              
               return (
                 <motion.div
                   key={index}
                   variants={cardVariants}
-                  whileHover={{ scale: 1.05, y: -8 }}
+                  whileHover={{ scale: 1.02, rotate: index % 2 === 0 ? 1 : -1 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  className="group relative"
+                  className={`group relative ${layouts[index]}`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-xl sm:rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
-                  <div className="relative bg-white/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-slate-700 hover:border-blue-500/50 transition-all duration-300 h-full shadow-lg">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-300" />
+                  <div className="relative bg-white/80 dark:bg-slate-800/50 backdrop-blur-md p-6 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-gray-200/50 dark:border-slate-700/50 hover:border-blue-400/70 dark:hover:border-blue-500/70 transition-all duration-300 h-full shadow-xl flex flex-col">
                     <motion.div 
-                      whileHover={{ rotate: 360 }}
+                      whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.6 }}
-                      className="p-2 sm:p-3 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 rounded-lg sm:rounded-xl inline-block mb-3 sm:mb-4"
+                      className="p-3 sm:p-4 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 rounded-2xl inline-flex items-center justify-center mb-4 sm:mb-6 w-fit shadow-lg"
                     >
-                      <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                      <Icon className="w-7 h-7 sm:w-9 sm:h-9 text-white" />
                     </motion.div>
-                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-slate-100">{service.title}</h3>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-slate-400 leading-relaxed">{service.description}</p>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-gray-900 dark:text-slate-100">{service.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-slate-400 leading-relaxed flex-grow">{service.description}</p>
+                    <motion.div 
+                      className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      whileHover={{ x: 5 }}
+                    >
+                      <ArrowRight className="w-5 h-5 text-blue-500" />
+                    </motion.div>
                   </div>
                 </motion.div>
               );
@@ -310,39 +338,46 @@ export default function AboutUs() {
         </div>
       </motion.section>
 
-      {/* Vision & Mission */}
+      {/* Vision & Mission - Side by Side Cards with Tilt */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={containerVariants}
-        className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10 backdrop-blur-sm"
+        className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 relative overflow-hidden"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
+        <div className="absolute inset-0 bg-gradient-to-tl from-blue-50/50 to-indigo-50/50 dark:from-blue-900/10 dark:to-indigo-900/10" style={{ clipPath: 'polygon(0 15%, 100% 0, 100% 100%, 0 100%)' }} />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-stretch">
             <motion.div 
               variants={cardVariants}
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ scale: 1.02, rotateY: 5 }}
+              transition={{ type: "spring", stiffness: 200 }}
               className="group relative"
+              style={{ perspective: '1000px' }}
             >
               <motion.div 
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-2xl sm:rounded-3xl blur-2xl" 
+                animate={{ 
+                  rotate: [0, 5, 0],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -inset-6 bg-gradient-to-br from-cyan-400/30 via-blue-500/20 to-transparent rounded-3xl blur-3xl" 
               />
-              <div className="relative bg-white/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-slate-700 hover:border-blue-500/50 transition-all duration-300 shadow-lg h-full">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="relative bg-gradient-to-br from-white via-cyan-50/30 to-blue-50/30 dark:from-slate-800/80 dark:via-slate-800/60 dark:to-slate-900/80 backdrop-blur-xl p-8 sm:p-10 lg:p-12 rounded-3xl border-2 border-cyan-200/50 dark:border-cyan-500/30 shadow-2xl h-full transform transition-all duration-500 group-hover:shadow-cyan-500/50">
+                <div className="flex items-center gap-4 mb-6">
                   <motion.div 
-                    whileHover={{ rotate: 360 }}
+                    whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
-                    className="p-2 sm:p-3 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg sm:rounded-xl"
+                    className="p-4 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-2xl shadow-xl"
                   >
-                    <Target className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                    <Target className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                   </motion.div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-slate-100">Our Vision</h3>
+                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-slate-100">Our Vision</h3>
                 </div>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-slate-300 leading-relaxed">
+                <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mb-6" />
+                <p className="text-base sm:text-lg text-gray-700 dark:text-slate-200 leading-relaxed">
                   To create a world where AI and humans collaborate seamlessly, driving innovation, creativity, and progress across every domain. We envision AI not as a tool, but as a partner in human advancement.
                 </p>
               </div>
@@ -350,27 +385,32 @@ export default function AboutUs() {
 
             <motion.div 
               variants={cardVariants}
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              whileHover={{ scale: 1.02, rotateY: -5 }}
+              transition={{ type: "spring", stiffness: 200 }}
               className="group relative"
+              style={{ perspective: '1000px' }}
             >
               <motion.div 
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
-                className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-2xl sm:rounded-3xl blur-2xl" 
+                animate={{ 
+                  rotate: [0, -5, 0],
+                  scale: [1, 1.05, 1]
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+                className="absolute -inset-6 bg-gradient-to-bl from-indigo-400/30 via-purple-500/20 to-transparent rounded-3xl blur-3xl" 
               />
-              <div className="relative bg-white/80 dark:bg-slate-800/50 backdrop-blur-sm p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl border border-gray-200 dark:border-slate-700 hover:border-indigo-500/50 transition-all duration-300 shadow-lg h-full">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="relative bg-gradient-to-bl from-white via-indigo-50/30 to-purple-50/30 dark:from-slate-800/80 dark:via-slate-800/60 dark:to-slate-900/80 backdrop-blur-xl p-8 sm:p-10 lg:p-12 rounded-3xl border-2 border-indigo-200/50 dark:border-indigo-500/30 shadow-2xl h-full transform transition-all duration-500 group-hover:shadow-indigo-500/50">
+                <div className="flex items-center gap-4 mb-6">
                   <motion.div 
-                    whileHover={{ rotate: 360 }}
+                    whileHover={{ rotate: 360, scale: 1.2 }}
                     transition={{ duration: 0.6 }}
-                    className="p-2 sm:p-3 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg sm:rounded-xl"
+                    className="p-4 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-2xl shadow-xl"
                   >
-                    <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                    <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                   </motion.div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-slate-100">Our Mission</h3>
+                  <h3 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-slate-100">Our Mission</h3>
                 </div>
-                <p className="text-base sm:text-lg text-gray-600 dark:text-slate-300 leading-relaxed">
+                <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mb-6" />
+                <p className="text-base sm:text-lg text-gray-700 dark:text-slate-200 leading-relaxed">
                   To democratize access to intelligent technology by developing ethical, scalable, and enterprise-grade AI solutions that deliver measurable business impact and long-term value.
                 </p>
               </div>
@@ -379,7 +419,7 @@ export default function AboutUs() {
         </div>
       </motion.section>
 
-      {/* Why Choose Us */}
+      {/* Why Choose Us - Masonry Style */}
       <motion.section
         initial="hidden"
         whileInView="visible"
@@ -387,33 +427,48 @@ export default function AboutUs() {
         variants={containerVariants}
         className="px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20"
       >
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.h2 
             variants={fadeInVariants}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 sm:mb-12 md:mb-16 text-gray-900 dark:text-slate-100"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 md:mb-20 text-gray-900 dark:text-slate-100"
           >
             Why Choose Us
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Masonry-inspired Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 auto-rows-auto">
             {whyChoose.map((item, index) => {
               const Icon = item.icon;
+              const layouts = [
+                "md:col-span-7", // 0 - wider
+                "md:col-span-5", // 1 - narrower
+                "md:col-span-4", // 2
+                "md:col-span-4", // 3
+                "md:col-span-4", // 4
+              ];
+              
               return (
                 <motion.div
                   key={index}
                   variants={cardVariants}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                  className={`group relative ${layouts[index]}`}
                 >
-                  <div className="bg-gradient-to-br from-white to-sky-50 dark:from-slate-800/80 dark:to-slate-900/80 backdrop-blur-sm p-6 sm:p-8 rounded-xl sm:rounded-2xl border border-gray-200 dark:border-slate-700 hover:border-blue-500/50 transition-all duration-300 shadow-lg h-full">
+                  <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/20 via-blue-500/20 to-indigo-600/20 rounded-3xl blur-lg group-hover:blur-xl transition-all duration-300" />
+                  <div className="relative bg-gradient-to-br from-white to-blue-50/50 dark:from-slate-800/90 dark:to-slate-900/90 backdrop-blur-md p-6 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-gray-200/60 dark:border-slate-700/60 hover:border-blue-400/80 dark:hover:border-blue-500/80 transition-all duration-300 shadow-xl h-full overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-transparent rounded-bl-full" />
                     <motion.div
                       whileHover={{ scale: 1.2, rotate: 360 }}
                       transition={{ duration: 0.5 }}
+                      className="relative z-10 mb-4 sm:mb-5"
                     >
-                      <Icon className="w-10 h-10 sm:w-12 sm:h-12 text-blue-500 mb-3 sm:mb-4" />
+                      <div className="p-3 sm:p-4 bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-700 rounded-2xl inline-flex shadow-lg">
+                        <Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                      </div>
                     </motion.div>
-                    <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-gray-900 dark:text-slate-100">{item.title}</h3>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-slate-400 leading-relaxed">{item.description}</p>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3 text-gray-900 dark:text-slate-100 relative z-10">{item.title}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 dark:text-slate-400 leading-relaxed relative z-10">{item.description}</p>
                   </div>
                 </motion.div>
               );
