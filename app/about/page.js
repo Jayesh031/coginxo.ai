@@ -459,7 +459,7 @@ export default function AboutUs() {
                   <div className="relative bg-gradient-to-br from-white to-blue-50/50 dark:from-slate-800/90 dark:to-slate-900/90 backdrop-blur-md p-6 sm:p-8 rounded-2xl sm:rounded-3xl border-2 border-gray-200/60 dark:border-slate-700/60 hover:border-blue-400/80 dark:hover:border-blue-500/80 transition-all duration-300 shadow-xl h-full overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-transparent rounded-bl-full" />
                     <motion.div
-                      whileHover={{ scale: 1.2, rotate: 360 }}
+                      
                       transition={{ duration: 0.5 }}
                       className="relative z-10 mb-4 sm:mb-5"
                     >
