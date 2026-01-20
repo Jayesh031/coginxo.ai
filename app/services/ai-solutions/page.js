@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import {
   Brain,
   Zap,
-  Target,
   ArrowRight,
   CheckCircle,
   Code,
@@ -27,32 +26,34 @@ import {
   Scan,
   Gauge,
   Rocket,
-  Workflow,
+  Workflow
 } from "lucide-react";
 
 export default function AISolutions() {
   const [isMounted, setIsMounted] = useState(false);
+  // FIX: Removed <any[]> type annotations
   const [bgIconPositions, setBgIconPositions] = useState([]);
   const [codePositions, setCodePositions] = useState([]);
 
-  // ==================== BACKGROUND DATA (MATCHING HOME PAGE) ====================
+  // ==================== 1. BACKGROUND DATA (UPDATED TO DARK/SUBTLE THEME) ====================
+  // Changed colors to dark/neutral gradients to match Image 1
   const techIcons = [
-    { icon: <Code size={20} />, color: "from-blue-300/20 to-blue-400/20" },
-    { icon: <Braces size={20} />, color: "from-purple-300/20 to-purple-400/20" },
-    { icon: <Database size={20} />, color: "from-green-300/20 to-green-400/20" },
-    { icon: <Terminal size={20} />, color: "from-slate-300/20 to-slate-400/20" },
-    { icon: <Server size={20} />, color: "from-orange-300/20 to-orange-400/20" },
-    { icon: <Cloud size={20} />, color: "from-sky-300/20 to-sky-400/20" },
-    { icon: <LineChart size={20} />, color: "from-red-300/20 to-red-400/20" },
-    { icon: <Lock size={20} />, color: "from-yellow-300/20 to-yellow-400/20" },
-    { icon: <GitBranch size={20} />, color: "from-emerald-300/20 to-emerald-400/20" },
-    { icon: <Settings size={20} />, color: "from-gray-300/20 to-gray-400/20" },
-    { icon: <Shield size={20} />, color: "from-indigo-300/20 to-indigo-400/20" },
-    { icon: <Zap size={20} />, color: "from-amber-300/20 to-amber-400/20" },
-    { icon: <Coffee size={20} />, color: "from-orange-300/20 to-orange-400/20" },
-    { icon: <Github size={20} />, color: "from-slate-300/20 to-slate-400/20" },
-    { icon: <Wifi size={20} />, color: "from-cyan-300/20 to-cyan-400/20" },
-    { icon: <Layers size={20} />, color: "from-pink-300/20 to-pink-400/20" },
+    { icon: <Code size={24} />, color: "from-slate-800/40 to-slate-900/40" },
+    { icon: <Braces size={24} />, color: "from-gray-800/40 to-gray-900/40" },
+    { icon: <Database size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
+    { icon: <Terminal size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
+    { icon: <Server size={24} />, color: "from-slate-800/40 to-slate-900/40" },
+    { icon: <Cloud size={24} />, color: "from-gray-800/40 to-gray-900/40" },
+    { icon: <LineChart size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
+    { icon: <Lock size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
+    { icon: <GitBranch size={24} />, color: "from-slate-800/40 to-slate-900/40" },
+    { icon: <Settings size={24} />, color: "from-gray-800/40 to-gray-900/40" },
+    { icon: <Shield size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
+    { icon: <Zap size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
+    { icon: <Coffee size={24} />, color: "from-slate-800/40 to-slate-900/40" },
+    { icon: <Github size={24} />, color: "from-gray-800/40 to-gray-900/40" },
+    { icon: <Wifi size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
+    { icon: <Layers size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
   ];
 
   const codeShapes = [
@@ -66,41 +67,53 @@ export default function AISolutions() {
     "train()", "accuracy", "loss", "epoch", "batch"
   ];
 
-  // Solutions Data
+  // ==================== 2. SOLUTIONS DATA ====================
   const solutions = [
     {
       icon: Bot,
+      color: "from-blue-500 to-cyan-400",
       title: "AI Chatbots & Automation",
-      desc: "LLM-powered conversational bots trained on your data, enabling support, sales, HR, and workflow automation.",
+      desc: "Deploy intelligent agents that handle support tickets, qualify leads, and automate internal workflows 24/7.",
+      tags: ["NLP", "Llama 3", "24/7 Support"]
     },
     {
       icon: Scan,
-      title: "Computer Vision Systems",
-      desc: "Visual inspection, quality control, face/object detection, OCR solutions, and video intelligence.",
+      color: "from-purple-500 to-pink-400",
+      title: "Computer Vision",
+      desc: "Automate quality control and security with systems that can see, identify, and track objects in real-time.",
+      tags: ["Object Detection", "OCR", "Face ID"]
     },
     {
       icon: Brain,
-      title: "Custom LLM Development",
-      desc: "Fine-tuned domain-specific models, RAG pipelines, embeddings, and vector DB knowledge systems.",
+      color: "from-orange-500 to-red-400",
+      title: "Custom LLM Training",
+      desc: "Fine-tune open-source models on your proprietary data to create a secure, domain-specific intelligence.",
+      tags: ["Fine-tuning", "RAG", "Data Privacy"]
     },
     {
       icon: Gauge,
+      color: "from-emerald-500 to-green-400",
       title: "Predictive Analytics",
-      desc: "Demand forecasting, sales predictions, risk scoring, customer analytics, and KPI trend modeling.",
+      desc: "Turn historical data into future insights. Forecast demand, churn, and market trends with high precision.",
+      tags: ["Forecasting", "Risk Scoring", "Trends"]
+    },
+    {
+      icon: Workflow,
+      color: "from-indigo-500 to-blue-600",
+      title: "Intelligent Workflows",
+      desc: "Connect your existing software stack with AI glue layers that autonomously move data and trigger actions.",
+      tags: ["Integration", "Zapier Alt", "API"]
     },
     {
       icon: Rocket,
-      title: "AI/ML Deployment",
-      desc: "MLOps, pipeline automation, cloud/on-prem deployments with GPU optimization and scalable architecture.",
-    },
-    {
-      icon: Layers,
-      title: "AI Integration for Apps",
-      desc: "Integrate AI into mobile apps, SaaS tools, CRMs, ERPs, and enterprise systems seamlessly.",
+      color: "from-cyan-500 to-blue-500",
+      title: "MLOps & Deployment",
+      desc: "End-to-end infrastructure management to ensure your AI models scale from prototype to production seamlessly.",
+      tags: ["Kubernetes", "Docker", "Scalability"]
     },
   ];
 
-  // ==================== BACKGROUND LOGIC ====================
+  // ==================== 3. BACKGROUND LOGIC ====================
   useEffect(() => {
     setIsMounted(true);
 
@@ -114,13 +127,14 @@ export default function AISolutions() {
       const cellW = vw / gridCols;
       const cellH = vh / gridRows;
 
-      const grid = Array(gridRows).fill().map(() => Array(gridCols).fill(false));
+      const grid = Array(gridRows).fill(null).map(() => Array(gridCols).fill(false));
       const icons = [];
       const codes = [];
 
       const maxIcons = vw < 640 ? 12 : vw < 1024 ? 18 : 24;
       const maxCodes = vw < 640 ? 20 : vw < 1024 ? 30 : 40;
 
+      // Removed type annotations for row/col
       const getRandomPos = (row, col) => ({
         x: col * cellW + Math.random() * (cellW * 0.6),
         y: row * cellH + Math.random() * (cellH * 0.6),
@@ -130,9 +144,9 @@ export default function AISolutions() {
       let count = 0;
       for (let r = 0; r < gridRows && count < maxIcons; r++) {
         for (let c = 0; c < gridCols && count < maxIcons; c++) {
-          if (Math.random() > 0.7) continue; // Random sparsity
+          if (Math.random() > 0.65) continue; // Slightly less sparse
           const pos = getRandomPos(r, c);
-          const size = (vw < 640 ? 30 : vw < 1024 ? 50 : 70) + Math.random() * 20;
+          const size = (vw < 640 ? 40 : vw < 1024 ? 60 : 80) + Math.random() * 20; 
           icons.push({ ...pos, size, icon: techIcons[Math.floor(Math.random() * techIcons.length)] });
           grid[r][c] = true;
           count++;
@@ -176,28 +190,29 @@ export default function AISolutions() {
       {/* ==================== BACKGROUND ANIMATION LAYERS ==================== */}
       {isMounted && (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-          {/* Icons */}
+          {/* Icons - UPDATED STYLING FOR DARK/FLOATING LOOK */}
           {bgIconPositions.map((pos, i) => (
             <div
               key={`icon-${i}`}
-              className={`absolute rounded-2xl bg-gradient-to-br ${pos.icon.color} backdrop-blur-sm flex items-center justify-center text-indigo-600/40 dark:text-indigo-300/30 animate-float-background opacity-20 dark:opacity-10`}
+              className={`absolute rounded-2xl bg-gradient-to-br ${pos.icon.color} backdrop-blur-[2px] border border-white/5 flex items-center justify-center text-slate-500/50 dark:text-slate-400/30 animate-float-background shadow-sm`}
               style={{
                 width: pos.size,
                 height: pos.size,
                 left: pos.x,
                 top: pos.y,
-                animationDelay: `${Math.random() * 5}s`
+                animationDelay: `${Math.random() * 5}s`,
+                opacity: 0.6 // Subtle opacity
               }}
             >
               {pos.icon.icon}
             </div>
           ))}
           
-          {/* Code Snippets */}
+          {/* Code Snippets - INCREASED VISIBILITY HERE */}
           {codePositions.map((pos, i) => (
             <div
               key={`code-${i}`}
-              className="absolute text-[10px] sm:text-xs md:text-sm font-mono text-indigo-500/30 dark:text-indigo-300/30 animate-code-float select-none"
+              className="absolute text-[10px] sm:text-xs md:text-sm font-mono text-indigo-600/50 dark:text-indigo-300/40 animate-code-float select-none font-semibold"
               style={{
                 left: pos.x,
                 top: pos.y,
@@ -218,7 +233,7 @@ export default function AISolutions() {
         className="relative z-10 px-6 lg:px-20 py-16 lg:py-24 max-w-7xl mx-auto flex flex-col items-center text-center"
       >
         {/* Badge */}
-        <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 bg-white/60 dark:bg-slate-800/60 backdrop-blur-md rounded-full px-4 py-2 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-700/50 shadow-sm mb-8">
+        <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-full px-4 py-2 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-700/50 shadow-sm mb-8">
           <Zap className="w-4 h-4 fill-current" />
           <span className="text-sm font-semibold tracking-wide uppercase">Enterprise Grade AI</span>
         </motion.div>
@@ -231,7 +246,7 @@ export default function AISolutions() {
           </span>
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-600 dark:text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+        <motion.p variants={itemVariants} className="text-lg md:text-xl text-gray-700 dark:text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-medium">
           We engineer scalable AI systems that automate complex workflows, predict market trends, and empower your workforce with next-gen intelligence.
         </motion.p>
 
@@ -243,13 +258,13 @@ export default function AISolutions() {
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </a>
           
-          <a href="/services" className="px-8 py-4 rounded-full bg-white/50 dark:bg-slate-800/50 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-semibold shadow-md hover:bg-white/80 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-300">
+          <a href="/services" className="px-8 py-4 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-semibold shadow-md hover:bg-white/90 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-300">
             View Case Studies
           </a>
         </motion.div>
 
         {/* Stats / Trust */}
-        <motion.div variants={itemVariants} className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-8 text-sm font-medium text-gray-500 dark:text-gray-400">
+        <motion.div variants={itemVariants} className="mt-12 flex flex-wrap justify-center gap-4 sm:gap-8 text-sm font-bold text-gray-600 dark:text-gray-400">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-5 h-5 text-emerald-500" /> 98% Accuracy Models
           </div>
@@ -263,7 +278,7 @@ export default function AISolutions() {
       </motion.section>
 
       {/* ==================== SOLUTIONS GRID ==================== */}
-      <section className="relative z-10 px-6 md:px-16 py-20 max-w-7xl mx-auto">
+      <section className="relative z-10 px-6 md:px-12 py-20 max-w-7xl mx-auto">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -274,42 +289,55 @@ export default function AISolutions() {
           <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
             Our Capabilities
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            From computer vision to predictive analytics, we provide end-to-end AI development tailored to your specific industry needs.
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
+             Tailored solutions that drive efficiency, scalability, and innovation.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {solutions.map((item, i) => {
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {solutions.map((item, index) => {
             const Icon = item.icon;
             return (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="group relative bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl border border-white/50 dark:border-slate-700/50 p-8 rounded-3xl shadow-lg hover:shadow-2xl hover:shadow-blue-500/10 transition-all overflow-hidden"
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="group relative p-8 rounded-3xl bg-white/90 dark:bg-slate-800/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500/50 dark:hover:border-blue-500/50 shadow-xl dark:shadow-2xl transition-all duration-300"
               >
-                {/* Card Gradient Hover Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Hover Gradient Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                <div className="relative z-10">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-indigo-600 flex items-center justify-center mb-6 shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
+                {/* Icon Container */}
+                <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className="text-white w-7 h-7" />
+                </div>
 
-                  <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {item.title}
                   </h3>
-
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
+                  
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
                     {item.desc}
                   </p>
 
-                  <div className="flex items-center text-sm font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-2 transition-transform cursor-pointer">
-                    Explore Solution <ArrowRight className="w-4 h-4 ml-1" />
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {item.tags.map((tag, tIndex) => (
+                      <span key={tIndex} className="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Link */}
+                  <div className="flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 cursor-pointer group/link">
+                    Explore Solution 
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
                   </div>
                 </div>
               </motion.div>
@@ -320,28 +348,19 @@ export default function AISolutions() {
 
       {/* ==================== CTA SECTION ==================== */}
       <section className="relative z-10 py-24 px-6">
-        <div className="max-w-5xl mx-auto relative rounded-[3rem] overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 shadow-2xl shadow-blue-900/40">
-            {/* Overlay Patterns */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-            <div className="absolute -left-20 -top-20 w-96 h-96 bg-cyan-400/30 rounded-full blur-3xl"></div>
-            <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl"></div>
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between p-10 md:p-16 gap-10 text-center md:text-left">
-                <div className="flex-1">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Ready to Transform Your Data?
-                    </h2>
-                    <p className="text-blue-100 text-lg max-w-xl">
-                        Schedule a free consultation with our AI architects and discover how much time and revenue you can save.
-                    </p>
-                </div>
-                <motion.button 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="px-8 py-4 bg-white text-indigo-600 font-bold rounded-full shadow-xl hover:shadow-2xl transition-all whitespace-nowrap"
-                >
-                    Book a Demo
-                </motion.button>
+        <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 to-blue-600 rounded-[2.5rem] p-12 md:p-20 text-center text-white shadow-2xl overflow-hidden relative">
+            {/* Decorative Circles */}
+            <div className="absolute top-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to Transform?</h2>
+              <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+                Let's discuss how we can integrate these solutions into your existing infrastructure today.
+              </p>
+              <button className="px-10 py-4 bg-white text-blue-700 font-bold rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+                Book a Free Consultation
+              </button>
             </div>
         </div>
       </section>
@@ -353,8 +372,8 @@ export default function AISolutions() {
           50% { transform: translateY(-20px) rotate(5deg); }
         }
         @keyframes code-float {
-          0%, 100% { opacity: 0.2; transform: translateY(0); }
-          50% { opacity: 0.5; transform: translateY(-25px); }
+          0%, 100% { opacity: 0.4; transform: translateY(0); }
+          50% { opacity: 0.8; transform: translateY(-25px); }
         }
         .animate-float-background {
           animation: float-background 15s ease-in-out infinite;
