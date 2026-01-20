@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import {
   Brain,
   Users,
@@ -25,9 +25,14 @@ import {
   CheckCircle2,
 } from "lucide-react"
 
+// IMPORT YOUR NEW COMPONENT
+// Adjust the path based on where you saved it, e.g. './DNAModal' or '@/components/DNAModal'
+import DNAModal from "../../components/DNAModal" 
+
 export default function AboutUs() {
   const [isMounted, setIsMounted] = useState(false)
   const [iconPositions, setIconPositions] = useState([])
+  const [isDNAModalOpen, setIsDNAModalOpen] = useState(false) // State for Modal
   const containerRef = useRef(null)
 
   // Scroll Parallax for Hero Text
@@ -79,32 +84,38 @@ export default function AboutUs() {
     {
       icon: Layers,
       title: "End-to-End Intelligence",
-      description: "From data collection to model deployment — a unified AI ecosystem built around your goals.",
+      description:
+        "From data collection to model deployment — a unified AI ecosystem built around your goals.",
     },
     {
       icon: Sparkles,
       title: "Cutting-Edge Innovation",
-      description: "We leverage the latest in Generative AI, LLMs, and Machine Learning to craft future-ready solutions.",
+      description:
+        "We leverage the latest in Generative AI, LLMs, and Machine Learning to craft future-ready solutions.",
     },
     {
       icon: Shield,
       title: "Ethics & Trust",
-      description: "Transparency, data security, and fairness are at the heart of every system we build.",
+      description:
+        "Transparency, data security, and fairness are at the heart of every system we build.",
     },
     {
       icon: TrendingUp,
       title: "Scalable Impact",
-      description: "Our modular architecture ensures agility, adaptability, and growth at every stage.",
+      description:
+        "Our modular architecture ensures agility, adaptability, and growth at every stage.",
     },
     {
       icon: Globe,
       title: "Global Vision",
-      description: "We blend global expertise with domain-specific intelligence for lasting impact.",
+      description:
+        "We blend global expertise with domain-specific intelligence for lasting impact.",
     },
     {
       icon: CheckCircle2,
       title: "Proven Reliability",
-      description: "Enterprise-grade SLAs and rigorous testing ensure your AI systems never falter.",
+      description:
+        "Enterprise-grade SLAs and rigorous testing ensure your AI systems never falter.",
     },
   ]
 
@@ -130,7 +141,11 @@ export default function AboutUs() {
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
   }
 
   return (
@@ -142,100 +157,118 @@ export default function AboutUs() {
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-white via-sky-50 to-indigo-100 dark:from-[#0b1220] dark:via-[#0b1220]/90 dark:to-[#0b1220]">
         
         {/* Animated Orbs */}
-        <motion.div 
-            animate={{ scale: [1, 1.2, 1], rotate: [0, 45, 0] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-cyan-400/10 dark:bg-cyan-500/5 rounded-full blur-[120px]" 
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 45, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-cyan-400/10 dark:bg-cyan-500/5 rounded-full blur-[120px]"
         />
-        <motion.div 
-            animate={{ scale: [1, 1.1, 1], rotate: [0, -45, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
-            className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-indigo-500/10 dark:bg-indigo-600/5 rounded-full blur-[120px]" 
+        <motion.div
+          animate={{ scale: [1, 1.1, 1], rotate: [0, -45, 0] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
+          className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-indigo-500/10 dark:bg-indigo-600/5 rounded-full blur-[120px]"
         />
 
         {/* Grid Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black,transparent)]" />
 
         {/* Floating Tech Icons */}
-        {isMounted && iconPositions.map((pos) => (
-          <motion.div
-            key={pos.id}
-            className={`absolute ${pos.icon.color} opacity-20 dark:opacity-10`}
-            style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-            animate={{ y: [0, -50, 0], rotate: [0, 10, -10, 0] }}
-            transition={{ duration: pos.duration, repeat: Infinity, delay: pos.delay, ease: "easeInOut" }}
-          >
-            {pos.icon.icon}
-          </motion.div>
-        ))}
+        {isMounted &&
+          iconPositions.map((pos) => (
+            <motion.div
+              key={pos.id}
+              className={`absolute ${pos.icon.color} opacity-20 dark:opacity-10`}
+              style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              animate={{ y: [0, -50, 0], rotate: [0, 10, -10, 0] }}
+              transition={{
+                duration: pos.duration,
+                repeat: Infinity,
+                delay: pos.delay,
+                ease: "easeInOut",
+              }}
+            >
+              {pos.icon.icon}
+            </motion.div>
+          ))}
       </div>
 
       {/* =====================================================================================
-          SCROLLABLE CONTENT (Relative z-10)
+          SCROLLABLE CONTENT
          ===================================================================================== */}
       <div className="relative z-10">
-
+        
         {/* --- HERO SECTION --- */}
         <section className="min-h-screen flex flex-col justify-center items-center pt-20 pb-10">
-            <motion.div 
-                style={{ y: y1, opacity }} 
-                className="max-w-5xl mx-auto px-6 text-center"
+          <motion.div
+            style={{ y: y1, opacity }}
+            className="max-w-5xl mx-auto px-6 text-center"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-slate-800/40 border border-blue-200 dark:border-blue-700/50 backdrop-blur-md mb-8 shadow-sm"
             >
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.6 }}
-                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/40 dark:bg-slate-800/40 border border-blue-200 dark:border-blue-700/50 backdrop-blur-md mb-8 shadow-sm"
-                >
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                    </span>
-                    <span className="text-sm font-semibold text-slate-600 dark:text-slate-300 tracking-wide">
-                        Redefining Machine Intelligence
-                    </span>
-                </motion.div>
-
-                <motion.h1 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
-                    className="text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight mb-8 leading-tight"
-                >
-                    We Architect <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-500 dark:to-indigo-500">
-                        Digital Minds.
-                    </span>
-                </motion.h1>
-
-                <motion.p 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="text-lg sm:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium"
-                >
-                    Pioneering the next generation of <span className="text-slate-900 dark:text-white font-bold">Ethical AI</span> and <span className="text-slate-900 dark:text-white font-bold">Cognitive Systems</span> to empower humanity's boldest ideas.
-                </motion.p>
-
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                    className="flex flex-col sm:flex-row gap-5 justify-center items-center"
-                >
-                    <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all">
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                        <div className="relative flex items-center gap-2">
-                            Meet the Team <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                    </button>
-
-                    <button className="group px-8 py-4 bg-white/40 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-white dark:hover:bg-slate-700 hover:border-blue-300 transition-all active:scale-95 flex items-center gap-2 shadow-sm backdrop-blur-md">
-                        <Fingerprint className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-cyan-500 transition-colors" />
-                        Our DNA
-                    </button>
-                </motion.div>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              </span>
+              <span className="text-sm font-semibold text-slate-600 dark:text-slate-300 tracking-wide">
+                Redefining Machine Intelligence
+              </span>
             </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl sm:text-7xl md:text-8xl font-extrabold tracking-tight mb-8 leading-tight"
+            >
+              We Architect <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 dark:from-cyan-400 dark:via-blue-500 dark:to-indigo-500">
+                Digital Minds.
+              </span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-lg sm:text-2xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12 font-medium"
+            >
+              Pioneering the next generation of{" "}
+              <span className="text-slate-900 dark:text-white font-bold">
+                Ethical AI
+              </span>{" "}
+              and{" "}
+              <span className="text-slate-900 dark:text-white font-bold">
+                Cognitive Systems
+              </span>{" "}
+              to empower humanity's boldest ideas.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+            >
+              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all">
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                <div className="relative flex items-center gap-2">
+                  Meet the Team{" "}
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
+
+              <button
+                onClick={() => setIsDNAModalOpen(true)}
+                className="group px-8 py-4 bg-white/40 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-white dark:hover:bg-slate-700 hover:border-blue-300 transition-all active:scale-95 flex items-center gap-2 shadow-sm backdrop-blur-md"
+              >
+                <Fingerprint className="w-5 h-5 text-slate-500 dark:text-slate-400 group-hover:text-cyan-500 transition-colors" />
+                Our DNA
+              </button>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* --- WHO WE ARE --- */}
@@ -249,15 +282,20 @@ export default function AboutUs() {
           <div className="max-w-5xl mx-auto">
             <motion.div variants={itemVariants} className="flex flex-col items-center mb-10">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/20 mb-4">
-                 <Users className="w-6 h-6 text-white" />
+                <Users className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-3xl md:text-5xl font-extrabold text-center">Who We Are</h2>
+              <h2 className="text-3xl md:text-5xl font-extrabold text-center">
+                Who We Are
+              </h2>
             </motion.div>
 
             <motion.div variants={itemVariants} className="relative group">
               <div className="relative bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-8 md:p-12 rounded-3xl border border-white/50 dark:border-slate-700 shadow-xl">
                 <p className="text-lg md:text-xl text-slate-700 dark:text-slate-200 text-center leading-relaxed font-medium">
-                  We are a team of visionaries, data scientists, and engineers passionate about building intelligent systems. Our multidisciplinary expertise spans Machine Learning, Generative AI, Data Analytics, and Workflow Intelligence.
+                  We are a team of visionaries, data scientists, and engineers
+                  passionate about building intelligent systems. Our
+                  multidisciplinary expertise spans Machine Learning, Generative
+                  AI, Data Analytics, and Workflow Intelligence.
                 </p>
               </div>
             </motion.div>
@@ -273,14 +311,23 @@ export default function AboutUs() {
           className="px-6 py-20"
         >
           <div className="max-w-6xl mx-auto">
-            <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-extrabold text-center mb-16">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl md:text-5xl font-extrabold text-center mb-16"
+            >
               What We Do
             </motion.h2>
 
             <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
               {services.map((service, index) => {
                 const Icon = service.icon
-                const layouts = ["md:col-span-3", "md:col-span-3", "md:col-span-2", "md:col-span-2", "md:col-span-2"]
+                const layouts = [
+                  "md:col-span-3",
+                  "md:col-span-3",
+                  "md:col-span-2",
+                  "md:col-span-2",
+                  "md:col-span-2",
+                ]
                 return (
                   <motion.div
                     key={index}
@@ -315,33 +362,42 @@ export default function AboutUs() {
           className="px-6 py-20"
         >
           <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <motion.div variants={itemVariants} className="relative h-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 transition-colors">
-                <div className="flex items-center gap-3 mb-6">
-                   <div className="p-3 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl text-cyan-600 dark:text-cyan-400">
-                      <Target size={24} />
-                   </div>
-                   <h3 className="text-2xl font-bold">Our Vision</h3>
+            <motion.div
+              variants={itemVariants}
+              className="relative h-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-cyan-400/50 transition-colors"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-cyan-100 dark:bg-cyan-900/30 rounded-xl text-cyan-600 dark:text-cyan-400">
+                  <Target size={24} />
                 </div>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                   To create a world where AI and humans collaborate seamlessly. We envision AI not as a tool, but as a partner in human advancement.
-                </p>
+                <h3 className="text-2xl font-bold">Our Vision</h3>
+              </div>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                To create a world where AI and humans collaborate seamlessly. We
+                envision AI not as a tool, but as a partner in human
+                advancement.
+              </p>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="relative h-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400/50 transition-colors">
-                <div className="flex items-center gap-3 mb-6">
-                   <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl text-indigo-600 dark:text-indigo-400">
-                      <Heart size={24} />
-                   </div>
-                   <h3 className="text-2xl font-bold">Our Mission</h3>
+            <motion.div
+              variants={itemVariants}
+              className="relative h-full bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl p-8 rounded-3xl border border-slate-200 dark:border-slate-700 hover:border-indigo-400/50 transition-colors"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl text-indigo-600 dark:text-indigo-400">
+                  <Heart size={24} />
                 </div>
-                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                   To democratize access to intelligent technology by developing ethical, scalable, and enterprise-grade AI solutions.
-                </p>
+                <h3 className="text-2xl font-bold">Our Mission</h3>
+              </div>
+              <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                To democratize access to intelligent technology by developing
+                ethical, scalable, and enterprise-grade AI solutions.
+              </p>
             </motion.div>
           </div>
         </motion.section>
 
-        {/* --- WHY CHOOSE US (New Grid Layout) --- */}
+        {/* --- WHY CHOOSE US --- */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -350,11 +406,13 @@ export default function AboutUs() {
           className="px-6 py-20"
         >
           <div className="max-w-7xl mx-auto">
-            <motion.h2 variants={itemVariants} className="text-3xl md:text-5xl font-extrabold text-center mb-16">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl md:text-5xl font-extrabold text-center mb-16"
+            >
               Why Choose Us
             </motion.h2>
 
-            {/* NEW LAYOUT: Clean 3-Column Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {whyChoose.map((item, index) => {
                 const Icon = item.icon
@@ -393,31 +451,54 @@ export default function AboutUs() {
         >
           <div className="max-w-3xl mx-auto">
             <motion.div variants={itemVariants} className="mb-8">
-               <div className="inline-block p-4 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl shadow-lg shadow-blue-500/30">
-                 <Sparkles className="w-8 h-8 text-white" />
-               </div>
+              <div className="inline-block p-4 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-2xl shadow-lg shadow-blue-500/30">
+                <Sparkles className="w-8 h-8 text-white" />
+              </div>
             </motion.div>
 
-            <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-extrabold mb-8">
+            <motion.h2
+              variants={itemVariants}
+              className="text-3xl md:text-4xl font-extrabold mb-8"
+            >
               Our Promise
             </motion.h2>
 
-            <motion.div variants={containerVariants} className="space-y-4 text-lg text-slate-600 dark:text-slate-300 mb-12 font-medium">
-              <motion.p variants={itemVariants}>To turn data into intelligence, and intelligence into opportunity.</motion.p>
-              <motion.p variants={itemVariants}>To transform challenges into solutions, and ideas into innovation.</motion.p>
-              <motion.p variants={itemVariants}>To build AI that works for people — not the other way around.</motion.p>
+            <motion.div
+              variants={containerVariants}
+              className="space-y-4 text-lg text-slate-600 dark:text-slate-300 mb-12 font-medium"
+            >
+              <motion.p variants={itemVariants}>
+                To turn data into intelligence, and intelligence into
+                opportunity.
+              </motion.p>
+              <motion.p variants={itemVariants}>
+                To transform challenges into solutions, and ideas into
+                innovation.
+              </motion.p>
+              <motion.p variants={itemVariants}>
+                To build AI that works for people — not the other way around.
+              </motion.p>
             </motion.div>
 
-            <motion.button 
-               variants={itemVariants}
-               className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-transform flex items-center gap-2 mx-auto"
+            <motion.button
+              variants={itemVariants}
+              className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-transform flex items-center gap-2 mx-auto"
             >
-                Start Your AI Journey <ArrowRight size={20} />
+              Start Your AI Journey <ArrowRight size={20} />
             </motion.button>
           </div>
         </motion.section>
-
       </div>
+
+      {/* --- DNA MODAL --- */}
+      <AnimatePresence>
+        {isDNAModalOpen && (
+          <DNAModal
+            isOpen={isDNAModalOpen}
+            onClose={() => setIsDNAModalOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
