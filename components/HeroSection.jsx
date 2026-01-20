@@ -127,13 +127,13 @@ const HeroSection = () => {
         <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
           
           {/* Badge: Added Dark Mode Styles */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60 border border-blue-200 dark:border-blue-700/50 text-blue-600 dark:text-blue-300 text-sm font-medium animate-fade-in shadow-sm backdrop-blur-md">
+          {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60 border border-blue-200 dark:border-blue-700/50 text-blue-600 dark:text-blue-300 text-sm font-medium animate-fade-in shadow-sm backdrop-blur-md">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
             v2.0 Now Available
-          </div>
+          </div> */}
 
           {/* Heading: Added Dark Mode Text Colors */}
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
