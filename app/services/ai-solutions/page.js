@@ -31,29 +31,27 @@ import {
 
 export default function AISolutions() {
   const [isMounted, setIsMounted] = useState(false);
-  // FIX: Removed <any[]> type annotations
   const [bgIconPositions, setBgIconPositions] = useState([]);
   const [codePositions, setCodePositions] = useState([]);
 
-  // ==================== 1. BACKGROUND DATA (UPDATED TO DARK/SUBTLE THEME) ====================
-  // Changed colors to dark/neutral gradients to match Image 1
+  // ==================== 1. BACKGROUND DATA ====================
   const techIcons = [
-    { icon: <Code size={24} />, color: "from-slate-800/40 to-slate-900/40" },
-    { icon: <Braces size={24} />, color: "from-gray-800/40 to-gray-900/40" },
-    { icon: <Database size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
-    { icon: <Terminal size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
-    { icon: <Server size={24} />, color: "from-slate-800/40 to-slate-900/40" },
-    { icon: <Cloud size={24} />, color: "from-gray-800/40 to-gray-900/40" },
-    { icon: <LineChart size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
-    { icon: <Lock size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
-    { icon: <GitBranch size={24} />, color: "from-slate-800/40 to-slate-900/40" },
-    { icon: <Settings size={24} />, color: "from-gray-800/40 to-gray-900/40" },
-    { icon: <Shield size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
-    { icon: <Zap size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
-    { icon: <Coffee size={24} />, color: "from-slate-800/40 to-slate-900/40" },
-    { icon: <Github size={24} />, color: "from-gray-800/40 to-gray-900/40" },
-    { icon: <Wifi size={24} />, color: "from-zinc-800/40 to-zinc-900/40" },
-    { icon: <Layers size={24} />, color: "from-neutral-800/40 to-neutral-900/40" },
+    { icon: <Code size={24} />, color: "from-white to-slate-50 dark:from-slate-800/40 dark:to-slate-900/40" },
+    { icon: <Braces size={24} />, color: "from-white to-slate-50 dark:from-gray-800/40 dark:to-gray-900/40" },
+    { icon: <Database size={24} />, color: "from-white to-slate-50 dark:from-zinc-800/40 dark:to-zinc-900/40" },
+    { icon: <Terminal size={24} />, color: "from-white to-slate-50 dark:from-neutral-800/40 dark:to-neutral-900/40" },
+    { icon: <Server size={24} />, color: "from-white to-slate-50 dark:from-slate-800/40 dark:to-slate-900/40" },
+    { icon: <Cloud size={24} />, color: "from-white to-slate-50 dark:from-gray-800/40 dark:to-gray-900/40" },
+    { icon: <LineChart size={24} />, color: "from-white to-slate-50 dark:from-zinc-800/40 dark:to-zinc-900/40" },
+    { icon: <Lock size={24} />, color: "from-white to-slate-50 dark:from-neutral-800/40 dark:to-neutral-900/40" },
+    { icon: <GitBranch size={24} />, color: "from-white to-slate-50 dark:from-slate-800/40 dark:to-slate-900/40" },
+    { icon: <Settings size={24} />, color: "from-white to-slate-50 dark:from-gray-800/40 dark:to-gray-900/40" },
+    { icon: <Shield size={24} />, color: "from-white to-slate-50 dark:from-zinc-800/40 dark:to-zinc-900/40" },
+    { icon: <Zap size={24} />, color: "from-white to-slate-50 dark:from-neutral-800/40 dark:to-neutral-900/40" },
+    { icon: <Coffee size={24} />, color: "from-white to-slate-50 dark:from-slate-800/40 dark:to-slate-900/40" },
+    { icon: <Github size={24} />, color: "from-white to-slate-50 dark:from-gray-800/40 dark:to-gray-900/40" },
+    { icon: <Wifi size={24} />, color: "from-white to-slate-50 dark:from-zinc-800/40 dark:to-zinc-900/40" },
+    { icon: <Layers size={24} />, color: "from-white to-slate-50 dark:from-neutral-800/40 dark:to-neutral-900/40" },
   ];
 
   const codeShapes = [
@@ -134,7 +132,6 @@ export default function AISolutions() {
       const maxIcons = vw < 640 ? 12 : vw < 1024 ? 18 : 24;
       const maxCodes = vw < 640 ? 20 : vw < 1024 ? 30 : 40;
 
-      // Removed type annotations for row/col
       const getRandomPos = (row, col) => ({
         x: col * cellW + Math.random() * (cellW * 0.6),
         y: row * cellH + Math.random() * (cellH * 0.6),
@@ -190,11 +187,22 @@ export default function AISolutions() {
       {/* ==================== BACKGROUND ANIMATION LAYERS ==================== */}
       {isMounted && (
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+          
+          {/* --- NEW GLOWING BUBBLES --- */}
+          {/* Top Left Glow */}
+          <div className="absolute -top-40 -left-40 w-96 h-96 bg-cyan-400/30 dark:bg-blue-600/10 rounded-full blur-[60px] -z-10"></div>
+          
+          {/* Bottom Right Glow */}
+          <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-400/30 dark:bg-indigo-600/10 rounded-full blur-[60px] -z-10"></div>
+          {/* --------------------------- */}
+
+
           {/* Icons - UPDATED STYLING FOR DARK/FLOATING LOOK */}
           {bgIconPositions.map((pos, i) => (
             <div
               key={`icon-${i}`}
-              className={`absolute rounded-2xl bg-gradient-to-br ${pos.icon.color} backdrop-blur-[2px] border border-white/5 flex items-center justify-center text-slate-500/50 dark:text-slate-400/30 animate-float-background shadow-sm`}
+              // FIX: Added 'border-slate-200' for light mode visibility and 'dark:border-white/5' for dark mode
+              className={`absolute rounded-2xl bg-gradient-to-br ${pos.icon.color} backdrop-blur-[2px] border border-slate-200/50 dark:border-white/5 flex items-center justify-center text-slate-500/50 dark:text-slate-400/30 animate-float-background shadow-sm`}
               style={{
                 width: pos.size,
                 height: pos.size,
@@ -233,10 +241,10 @@ export default function AISolutions() {
         className="relative z-10 px-6 lg:px-20 py-16 lg:py-24 max-w-7xl mx-auto flex flex-col items-center text-center"
       >
         {/* Badge */}
-        <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-full px-4 py-2 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-700/50 shadow-sm mb-8">
+        {/* <motion.div variants={itemVariants} className="inline-flex items-center space-x-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md rounded-full px-4 py-2 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-700/50 shadow-sm mb-8">
           <Zap className="w-4 h-4 fill-current" />
           <span className="text-sm font-semibold tracking-wide uppercase">Enterprise Grade AI</span>
-        </motion.div>
+        </motion.div> */}
 
         {/* Heading */}
         <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
