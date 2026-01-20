@@ -1,10 +1,68 @@
 "use client"
+
 import { useState, useEffect, useRef } from "react"
 import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Menu, X, Home, ChevronDown } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
-import ThemeToggle from "./theme-toggle" // add toggle import
+import ThemeToggle from "./theme-toggle"
+
+// --- Animation Variants ---
+const navContainerVariants = {
+  hidden: { y: -100, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 60, damping: 20, duration: 1.2 },
+  },
+}
+
+const dropdownVariants = {
+  hidden: { opacity: 0, y: -10, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    scale: 0.95,
+    transition: { duration: 0.3, ease: "easeIn" },
+  },
+}
+
+const mobileMenuVariants = {
+  hidden: { opacity: 0, height: 0 },
+  visible: {
+    opacity: 1,
+    height: "auto",
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+  exit: {
+    opacity: 0,
+    height: 0,
+    transition: { duration: 0.4, ease: "easeInOut" },
+  },
+}
+
+const mobileItemVariants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: (i) => ({
+    opacity: 1,
+    x: 0,
+    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" },
+  }),
+}
+
+// --- Styles Constants ---
+const GLASS_GRADIENT_SCROLLED =
+  "linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(99, 102, 241, 0.2) 100%)"
+const GLASS_GRADIENT_DEFAULT =
+  "linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(99, 102, 241, 0.15) 100%)"
+const MOBILE_MENU_BG =
+  "linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(99, 102, 241, 0.3) 100%)"
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -14,53 +72,46 @@ export default function Navbar() {
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false)
   const servicesDropdownRef = useRef(null)
 
-  // Optimize scroll handling with throttling
+  // Optimized Scroll Handler
   useEffect(() => {
-    let ticking = false
     const handleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20)
-          ticking = false
-        })
-        ticking = true
+      const isScrolled = window.scrollY > 20
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled)
       }
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [scrolled])
 
-  // Prevent body scroll when mobile menu is open
+  // Body Scroll Lock
   useEffect(() => {
-  const html = document.documentElement
-  if (isMenuOpen) {
-    document.body.style.overflow = "hidden"
-    html.style.overflow = "hidden"
-  } else {
-    document.body.style.overflow = "unset"
-    html.style.overflow = "unset"
-  }
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isMenuOpen])
 
-  return () => {
-    document.body.style.overflow = "unset"
-    html.style.overflow = "unset"
-  }
-}, [isMenuOpen])
-
-  // Close dropdown when clicking outside
+  // Click Outside Handler
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target)) {
+      if (
+        servicesDropdownRef.current &&
+        !servicesDropdownRef.current.contains(event.target)
+      ) {
         setIsServicesOpen(false)
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  // Close mobile menu when route changes
+  // Route Change Handler
   useEffect(() => {
     setIsMenuOpen(false)
     setIsServicesOpen(false)
@@ -84,44 +135,48 @@ export default function Navbar() {
     { name: "Contact Us", href: "/contact" },
   ]
 
-  const handleMenuClose = () => {
-    setIsMenuOpen(false)
-    setIsServicesOpen(false)
-    setIsMobileServicesOpen(false)
+  // Safe active check
+  const isActive = (href) => {
+    if (!pathname) return false;
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  }
+
+  // Helper to generate dynamic link classes
+  const getLinkClasses = (active, isMobile = false) => {
+    const base = isMobile
+      ? "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left rounded-lg sm:rounded-xl flex items-center gap-2 transition-all duration-500 text-sm sm:text-base font-medium"
+      : "relative px-3 xl:px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-500 flex items-center gap-1"
+
+    if (active) {
+      return isMobile
+        ? `${base} bg-gradient-to-r from-slate-700/80 via-slate-600/80 to-slate-700/80 text-cyan-300 shadow-lg border border-cyan-400/30`
+        : `${base} text-black bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-indigo-600/30 shadow-lg`
+    }
+    return isMobile
+      ? `${base} text-black hover:bg-gradient-to-r hover:from-slate-700/60 hover:via-slate-600/60 hover:to-slate-700/60 hover:text-cyan-200 hover:shadow-md`
+      : `${base} text-black hover:bg-gradient-to-r hover:from-cyan-500/20 hover:via-blue-500/20 hover:to-indigo-600/20`
   }
 
   const handleServicesClick = (e) => {
-    if (window.innerWidth >= 1024) { // Changed to lg breakpoint
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
       e.preventDefault()
       setIsServicesOpen(!isServicesOpen)
     }
   }
 
-  const isActive = (href) => {
-    if (href === "/") {
-      return pathname === "/"
-    }
-    return pathname.startsWith(href)
-  }
-
   return (
     <header role="banner" className="w-full flex justify-center fixed top-0 z-50">
       <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 60, // Reduced for slower animation
-          damping: 20,   // Increased for smoother animation
-          duration: 1.2, // Increased duration
-        }}
+        variants={navContainerVariants}
+        initial="hidden"
+        animate="visible"
         className={`w-[90%] sm:w-[90%] md:w-[90%] lg:w-4/5 xl:w-3/4 2xl:w-2/3 max-w-7xl mx-1 sm:mx-2 md:mx-4 mt-1 sm:mt-2 md:mt-4 rounded-xl sm:rounded-2xl transition-all duration-700 ease-in-out relative ${
-          scrolled ? "shadow-2xl backdrop-blur-xl" : "shadow-xl backdrop-blur-lg"
+          scrolled
+            ? "shadow-2xl backdrop-blur-xl"
+            : "shadow-xl backdrop-blur-lg"
         }`}
         style={{
-          background: scrolled
-            ? "linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(59, 130, 246, 0.2) 50%, rgba(99, 102, 241, 0.2) 100%)"
-            : "linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(59, 130, 246, 0.15) 50%, rgba(99, 102, 241, 0.15) 100%)",
+          background: scrolled ? GLASS_GRADIENT_SCROLLED : GLASS_GRADIENT_DEFAULT,
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           border: "1px solid rgba(255, 255, 255, 0.2)",
@@ -134,16 +189,11 @@ export default function Navbar() {
       >
         <div className="px-2 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4">
           <div className="flex items-center justify-between gap-2 sm:gap-3">
-            {/* Logo with enhanced responsiveness */}
+            {/* Logo */}
             <motion.div
               className="flex-shrink-0 min-w-0"
               whileHover={{ scale: 1.05 }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 300, // Slower hover animation
-                damping: 20,
-                duration: 0.6 
-              }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <Link
                 href="/"
@@ -155,7 +205,7 @@ export default function Navbar() {
               </Link>
             </motion.div>
 
-            {/* Desktop navigation - hidden on smaller screens */}
+            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1 xl:space-x-2 flex-1 justify-center">
               {navItems.map((item, index) => (
                 <motion.div
@@ -164,35 +214,25 @@ export default function Navbar() {
                   ref={item.hasDropdown ? servicesDropdownRef : null}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    delay: index * 0.15, // Slower stagger
-                    duration: 0.8,       // Longer duration
-                    ease: "easeOut"
-                  }}
+                  transition={{ delay: index * 0.15, duration: 0.8 }}
                 >
                   {item.hasDropdown ? (
                     <motion.button
                       onClick={handleServicesClick}
                       onMouseEnter={() => setIsServicesOpen(true)}
                       onMouseLeave={() => setIsServicesOpen(false)}
-                      className={`relative px-3 xl:px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-500 flex items-center gap-1 ${
-                        isActive(item.href)
-                          ? "text-black bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-indigo-600/30 shadow-lg"
-                          : "text-black hover:bg-gradient-to-r hover:from-cyan-500/20 hover:via-blue-500/20 hover:to-indigo-600/20"
-                      }`}
+                      className={getLinkClasses(isActive(item.href))}
                       whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.4 }} // Slower hover transition
                       aria-expanded={isServicesOpen}
                       aria-haspopup="true"
-                      aria-label={`${item.name} menu`}
                     >
                       <span className="flex items-center gap-1">
                         {item.icon}
                         {item.name}
                         <motion.div
                           animate={{ rotate: isServicesOpen ? 180 : 0 }}
-                          transition={{ duration: 0.5, ease: "easeInOut" }} // Slower rotation
+                          transition={{ duration: 0.5 }}
                         >
                           <ChevronDown size={14} />
                         </motion.div>
@@ -201,26 +241,15 @@ export default function Navbar() {
                         <motion.div
                           className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 rounded-full"
                           layoutId="activeDesktopUnderline"
-                          transition={{ 
-                            type: "spring", 
-                            stiffness: 300, // Slower spring
-                            damping: 30,
-                            duration: 0.6
-                          }}
                         />
                       )}
                     </motion.button>
                   ) : (
                     <Link href={item.href}>
                       <motion.div
-                        className={`relative px-3 xl:px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-500 flex items-center gap-1 ${
-                          isActive(item.href)
-                            ? "text-black bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-indigo-600/30 shadow-lg"
-                            : "text-black hover:bg-gradient-to-r hover:from-cyan-500/20 hover:via-blue-500/20 hover:to-indigo-600/20"
-                        }`}
+                        className={getLinkClasses(isActive(item.href))}
                         whileHover={{ scale: 1.05, y: -2 }}
                         whileTap={{ scale: 0.95 }}
-                        transition={{ duration: 0.4 }} // Slower hover transition
                         aria-current={isActive(item.href) ? "page" : undefined}
                       >
                         <span className="flex items-center gap-1">
@@ -231,27 +260,21 @@ export default function Navbar() {
                           <motion.div
                             className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 rounded-full"
                             layoutId="activeDesktopUnderline"
-                            transition={{ 
-                              type: "spring", 
-                              stiffness: 300, // Slower spring
-                              damping: 30,
-                              duration: 0.6
-                            }}
                           />
                         )}
                       </motion.div>
                     </Link>
                   )}
 
-                  {/* Desktop Services Dropdown */}
+                  {/* Desktop Dropdown */}
                   <AnimatePresence>
                     {item.hasDropdown && isServicesOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }} // Slower dropdown animation
-                        className="absolute top-full left-0 mt-4 w-52 rounded-xl overflow-hidden shadow-2xl z-100"
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="absolute top-full left-0 mt-4 w-52 rounded-xl overflow-hidden shadow-2xl z-50"
                         style={{
                           background:
                             "linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(59, 130, 246, 0.25) 50%, rgba(99, 102, 241, 0.25) 100%)",
@@ -261,24 +284,21 @@ export default function Navbar() {
                         }}
                         onMouseEnter={() => setIsServicesOpen(true)}
                         onMouseLeave={() => setIsServicesOpen(false)}
-                        role="menu"
-                        aria-label="Services submenu"
                       >
                         <div className="py-2">
-                          {item.dropdownItems.map((dropdownItem, dropdownIndex) => (
+                          {item.dropdownItems.map((dropdownItem, dIndex) => (
                             <Link key={dropdownItem.href} href={dropdownItem.href}>
                               <motion.div
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: dIndex * 0.08 }}
                                 className={`block px-4 py-3 text-sm transition-all duration-300 ${
                                   isActive(dropdownItem.href)
                                     ? "bg-gradient-to-r from-cyan-500/40 via-blue-500/40 to-indigo-600/40 text-black font-medium border-l-4 border-cyan-400"
-                                    : "text-black hover:bg-gradient-to-r hover:from-cyan-500/30 hover:via-blue-500/30 hover:to-indigo-600/30 "
+                                    : "text-black hover:bg-gradient-to-r hover:from-cyan-500/30 hover:via-blue-500/30 hover:to-indigo-600/30"
                                 }`}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: dropdownIndex * 0.08, duration: 0.5 }} // Slower stagger
-                                whileHover={{ x: 5, backgroundColor: "rgba(59, 130, 246, 0.15)" }}
-                                onClick={handleMenuClose}
-                                role="menuitem"
+                                whileHover={{ x: 5 }}
+                                onClick={() => setIsMenuOpen(false)}
                               >
                                 {dropdownItem.name}
                               </motion.div>
@@ -292,27 +312,23 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* Right side - Theme toggle and mobile menu */}
+            {/* Mobile Toggle & Theme */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-              {/* Theme toggle - always visible */}
               <div className="order-2 lg:order-2">
                 <ThemeToggle />
               </div>
-
-              {/* Mobile menu button */}
               <motion.button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2 sm:p-2.5 rounded-lg text-black hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-300 order-2 lg:order-1"
+                className="lg:hidden p-2 sm:p-2.5 rounded-lg text-black hover:bg-white/10 transition-all duration-300 order-2 lg:order-1"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                transition={{ duration: 0.4 }} // Slower button animation
                 aria-expanded={isMenuOpen}
-                aria-controls="mobile-menu"
                 aria-label="Toggle navigation menu"
+                aria-controls="mobile-menu"
               >
-                <motion.div 
-                  animate={{ rotate: isMenuOpen ? 90 : 0 }} 
-                  transition={{ duration: 0.6, ease: "easeInOut" }} // Much slower rotation
+                <motion.div
+                  animate={{ rotate: isMenuOpen ? 90 : 0 }}
+                  transition={{ duration: 0.6 }}
                 >
                   {isMenuOpen ? (
                     <X size={20} className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -324,57 +340,45 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Mobile menu with improved responsiveness */}
+          {/* Mobile Menu */}
           <AnimatePresence>
             {isMenuOpen && (
               <motion.div
                 id="mobile-menu"
+                variants={mobileMenuVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 className="lg:hidden overflow-hidden rounded-b-xl mt-5 sm:rounded-b-2xl"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ 
-                  duration: 0.6,        // Slower menu animation
-                  ease: "easeInOut",
-                  height: { duration: 0.5 },
-                  opacity: { duration: 0.4 }
-                }}
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(59, 130, 246, 0.3) 50%, rgba(99, 102, 241, 0.3) 100%)",
+                  background: MOBILE_MENU_BG,
                   backdropFilter: "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
                 }}
-                role="menu"
-                aria-label="Mobile navigation menu"
               >
                 <div className="border-t border-white/20 mt-2">
                   <div className="flex flex-col space-y-1 px-2 sm:px-4 py-3 sm:py-4 max-h-[calc(100vh-120px)] overflow-y-auto">
                     {navItems.map((item, index) => (
                       <motion.div
                         key={item.href}
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          delay: index * 0.15,  // Slower stagger
-                          duration: 0.6,        // Longer duration
-                          ease: "easeOut",
-                        }}
+                        custom={index}
+                        variants={mobileItemVariants}
+                        initial="hidden"
+                        animate="visible"
                       >
                         {item.hasDropdown ? (
                           <div>
                             <motion.button
-                              onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-                              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left rounded-lg sm:rounded-xl flex items-center justify-between transition-all duration-500 text-sm sm:text-base font-medium ${
-                                isActive(item.href)
-                                  ? "bg-gradient-to-r from-slate-700/80 via-slate-600/80 to-slate-700/80 text-cyan-300 shadow-lg border border-cyan-400/30"
-                                  : "text-black hover:bg-gradient-to-r hover:from-slate-700/60 hover:via-slate-600/60 hover:to-slate-700/60 hover:text-cyan-200 hover:shadow-md"
-                              }`}
-                              whileHover={{ x: 3, scale: 1.01 }} // Reduced movement for mobile
+                              onClick={() =>
+                                setIsMobileServicesOpen(!isMobileServicesOpen)
+                              }
+                              className={`w-full justify-between ${getLinkClasses(
+                                isActive(item.href),
+                                true
+                              )}`}
+                              whileHover={{ x: 3 }}
                               whileTap={{ scale: 0.98 }}
-                              transition={{ duration: 0.4 }} // Slower mobile interactions
                               aria-expanded={isMobileServicesOpen}
-                              aria-controls="mobile-services-menu"
                             >
                               <div className="flex items-center gap-2 min-w-0">
                                 <span className="flex-shrink-0">{item.icon}</span>
@@ -382,63 +386,42 @@ export default function Navbar() {
                                 {isActive(item.href) && (
                                   <motion.span
                                     className="ml-2 h-2 w-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 flex-shrink-0"
-                                    initial={{ scale: 0 }}
-                                    animate={{ scale: 1 }}
-                                    transition={{ 
-                                      type: "spring", 
-                                      stiffness: 300, // Slower spring
-                                      damping: 20,
-                                      duration: 0.6
-                                    }}
+                                    layoutId="mobileActiveDot"
                                   />
                                 )}
                               </div>
                               <motion.div
                                 animate={{ rotate: isMobileServicesOpen ? 180 : 0 }}
-                                transition={{ duration: 0.6, ease: "easeInOut" }} // Much slower rotation
-                                className="flex-shrink-0"
+                                transition={{ duration: 0.6 }}
                               >
-                                <ChevronDown size={16} className="sm:w-[18px] sm:h-[18px]" />
+                                <ChevronDown size={16} />
                               </motion.div>
                             </motion.button>
 
-                            {/* Mobile Services Dropdown */}
                             <AnimatePresence>
                               {isMobileServicesOpen && (
                                 <motion.div
-                                  id="mobile-services-menu"
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                  transition={{ 
-                                    duration: 0.5,    // Slower dropdown
-                                    ease: "easeInOut",
-                                    height: { duration: 0.4 },
-                                    opacity: { duration: 0.3 }
-                                  }}
+                                  variants={mobileMenuVariants}
+                                  initial="hidden"
+                                  animate="visible"
+                                  exit="exit"
                                   className="ml-4 sm:ml-6 mt-2 space-y-1 overflow-hidden"
-                                  role="menu"
                                 >
-                                  {item.dropdownItems.map((dropdownItem, dropdownIndex) => (
-                                    <Link key={dropdownItem.href} href={dropdownItem.href}>
+                                  {item.dropdownItems.map((dItem, dIndex) => (
+                                    <Link key={dItem.href} href={dItem.href}>
                                       <motion.div
+                                        initial={{ opacity: 0, x: -15 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: dIndex * 0.1 }}
                                         className={`w-full px-3 sm:px-4 py-2 sm:py-2.5 text-left rounded-lg transition-all duration-400 text-xs sm:text-sm border-l-2 ${
-                                          isActive(dropdownItem.href)
+                                          isActive(dItem.href)
                                             ? "bg-gradient-to-r from-slate-800/70 via-slate-700/70 to-slate-800/70 text-cyan-300 font-medium border-cyan-500 shadow-md"
                                             : "text-black hover:bg-gradient-to-r hover:from-slate-800/50 hover:via-slate-700/50 hover:to-slate-800/50 hover:text-cyan-200 border-cyan-600/50 hover:border-cyan-400"
                                         }`}
-                                        initial={{ opacity: 0, x: -15 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{
-                                          delay: dropdownIndex * 0.12, // Slower stagger
-                                          duration: 0.6,                // Longer duration
-                                        }}
-                                        whileHover={{ x: 4, backgroundColor: "rgba(51, 65, 85, 0.3)" }} // Reduced movement
-                                        whileTap={{ scale: 0.98 }}
-                                        onClick={handleMenuClose}
-                                        role="menuitem"
+                                        whileHover={{ x: 4 }}
+                                        onClick={() => setIsMenuOpen(false)}
                                       >
-                                        <span className="truncate">{dropdownItem.name}</span>
+                                        <span className="truncate">{dItem.name}</span>
                                       </motion.div>
                                     </Link>
                                   ))}
@@ -449,16 +432,10 @@ export default function Navbar() {
                         ) : (
                           <Link href={item.href}>
                             <motion.div
-                              className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left rounded-lg sm:rounded-xl flex items-center gap-2 transition-all duration-500 text-sm sm:text-base font-medium ${
-                                isActive(item.href)
-                                  ? "bg-gradient-to-r from-slate-700/80 via-slate-600/80 to-slate-700/80 text-cyan-300 shadow-lg border border-cyan-400/30"
-                                  : "text-black hover:bg-gradient-to-r hover:from-slate-700/60 hover:via-slate-600/60 hover:to-slate-700/60 hover:text-cyan-200 hover:shadow-md"
-                              }`}
-                              whileHover={{ x: 3, scale: 1.01 }} // Reduced movement for mobile
+                              className={getLinkClasses(isActive(item.href), true)}
+                              whileHover={{ x: 3 }}
                               whileTap={{ scale: 0.98 }}
-                              transition={{ duration: 0.4 }} // Slower mobile interactions
-                              onClick={handleMenuClose}
-                              role="menuitem"
+                              onClick={() => setIsMenuOpen(false)}
                               aria-current={isActive(item.href) ? "page" : undefined}
                             >
                               <span className="flex-shrink-0">{item.icon}</span>
@@ -466,14 +443,7 @@ export default function Navbar() {
                               {isActive(item.href) && (
                                 <motion.span
                                   className="h-2 w-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 flex-shrink-0"
-                                  initial={{ scale: 0 }}
-                                  animate={{ scale: 1 }}
-                                  transition={{ 
-                                    type: "spring", 
-                                    stiffness: 300, // Slower spring
-                                    damping: 20,
-                                    duration: 0.6
-                                  }}
+                                  layoutId="mobileActiveDot"
                                 />
                               )}
                             </motion.div>

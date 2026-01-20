@@ -435,3 +435,76 @@ export default function Navbar() {
     </header>
   )
 }
+
+
+
+// -----------------------------------------------------------------------------------------------------------------------------
+
+
+<section className="relative z-10 px-6 md:px-12 py-20 max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 bg-clip-text text-transparent">
+            Our Data Capabilities
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto font-medium">
+             End-to-end data solutions from warehousing to predictive analytics.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {services.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="group relative p-8 rounded-3xl bg-white/90 dark:bg-slate-800/80 backdrop-blur-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500/50 dark:hover:border-blue-500/50 shadow-xl dark:shadow-2xl transition-all duration-300"
+              >
+                {/* Hover Gradient Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Icon Container */}
+                <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                  <Icon className="text-white w-7 h-7" />
+                </div>
+
+                {/* Content */}
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                    {item.title}
+                  </h3>
+                  
+                  <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6">
+                    {item.desc}
+                  </p>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {item.tags.map((tag, tIndex) => (
+                      <span key={tIndex} className="px-3 py-1 text-xs font-medium rounded-md bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Link */}
+                  <div className="flex items-center gap-2 text-sm font-bold text-blue-600 dark:text-blue-400 cursor-pointer group/link">
+                    View Details 
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
