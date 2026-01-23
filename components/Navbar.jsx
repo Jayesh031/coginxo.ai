@@ -8,9 +8,10 @@ import { motion, AnimatePresence } from "framer-motion"
 import ThemeToggle from "./theme-toggle"
 
 // --- Animation Variants ---
+// 1. UPDATED: Renamed keys to avoid conflict with child components
 const navContainerVariants = {
-  hidden: { y: -100, opacity: 0 },
-  visible: {
+  navHidden: { y: -100, opacity: 0 },
+  navVisible: {
     y: 0,
     opacity: 1,
     transition: { type: "spring", stiffness: 60, damping: 20, duration: 1.2 },
@@ -135,13 +136,11 @@ export default function Navbar() {
     { name: "Contact Us", href: "/contact" },
   ]
 
-  // Safe active check
   const isActive = (href) => {
     if (!pathname) return false;
     return href === "/" ? pathname === "/" : pathname.startsWith(href);
   }
 
-  // Helper to generate dynamic link classes
   const getLinkClasses = (active, isMobile = false) => {
     const base = isMobile
       ? "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left rounded-lg sm:rounded-xl flex items-center gap-2 transition-all duration-500 text-sm sm:text-base font-medium"
@@ -168,8 +167,9 @@ export default function Navbar() {
     <header role="banner" className="w-full flex justify-center fixed top-0 z-50">
       <motion.nav
         variants={navContainerVariants}
-        initial="hidden"
-        animate="visible"
+        // 2. UPDATED: Using the new unique variant names
+        initial="navHidden"
+        animate="navVisible"
         className={`w-[90%] sm:w-[90%] md:w-[90%] lg:w-4/5 xl:w-3/4 2xl:w-2/3 max-w-7xl mx-1 sm:mx-2 md:mx-4 mt-1 sm:mt-2 md:mt-4 rounded-xl sm:rounded-2xl transition-all duration-700 ease-in-out relative ${
           scrolled
             ? "shadow-2xl backdrop-blur-xl"
@@ -212,10 +212,12 @@ export default function Navbar() {
                   key={item.href}
                   className="relative"
                   ref={item.hasDropdown ? servicesDropdownRef : null}
+                  // These are explicit, so they are safe from the variant change
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.15, duration: 0.8 }}
                 >
+                  {/* ... Link/Dropdown Logic ... */}
                   {item.hasDropdown ? (
                     <motion.button
                       onClick={handleServicesClick}
@@ -266,7 +268,6 @@ export default function Navbar() {
                     </Link>
                   )}
 
-                  {/* Desktop Dropdown */}
                   <AnimatePresence>
                     {item.hasDropdown && isServicesOpen && (
                       <motion.div
@@ -276,8 +277,7 @@ export default function Navbar() {
                         exit="exit"
                         className="absolute top-full left-0 mt-4 w-52 rounded-xl overflow-hidden shadow-2xl z-50"
                         style={{
-                          background:
-                            "linear-gradient(135deg, rgba(6, 182, 212, 0.25) 0%, rgba(59, 130, 246, 0.25) 50%, rgba(99, 102, 241, 0.25) 100%)",
+                          background: "linear-gradient(135deg, rgba(6, 182, 212, 0.45) 0%, rgba(59, 130, 246, 0.45) 50%, rgba(99, 102, 241, 0.45) 100%)",
                           backdropFilter: "blur(20px)",
                           WebkitBackdropFilter: "blur(20px)",
                           border: "1px solid rgba(255, 255, 255, 0.3)",
@@ -356,6 +356,7 @@ export default function Navbar() {
                   WebkitBackdropFilter: "blur(20px)",
                 }}
               >
+                {/* ... Mobile Menu Content ... */}
                 <div className="border-t border-white/20 mt-2">
                   <div className="flex flex-col space-y-1 px-2 sm:px-4 py-3 sm:py-4 max-h-[calc(100vh-120px)] overflow-y-auto">
                     {navItems.map((item, index) => (
@@ -366,6 +367,7 @@ export default function Navbar() {
                         initial="hidden"
                         animate="visible"
                       >
+                         {/* ... Mobile Items Implementation (Unchanged) ... */}
                         {item.hasDropdown ? (
                           <div>
                             <motion.button
