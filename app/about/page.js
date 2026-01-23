@@ -2,43 +2,42 @@
 import React, { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import {
-  Brain,
-  Users,
-  Sparkles,
-  Database,
-  Zap,
-  TrendingUp,
-  Shield,
-  Layers,
-  Globe,
-  Target,
-  Heart,
-  ArrowRight,
-  Code,
-  Braces,
-  Terminal,
-  Server,
-  Cloud,
-  Cpu,
-  Bot,
-  Fingerprint,
-  CheckCircle2,
+  Brain, Users, Sparkles, Database, Zap, TrendingUp, Shield, Layers, Globe, Target, Heart, ArrowRight,
+  Code, Braces, Terminal, Server, Cloud, Cpu, Bot, Fingerprint, CheckCircle2
 } from "lucide-react"
 
-// IMPORT YOUR NEW COMPONENT
-// Adjust the path based on where you saved it, e.g. './DNAModal' or '@/components/DNAModal'
+// Import Modals (Ensure these paths match your project structure)
 import DNAModal from "../../components/DNAModal" 
+import TeamModal from "../../components/TeamModal" 
 
 export default function AboutUs() {
   const [isMounted, setIsMounted] = useState(false)
   const [iconPositions, setIconPositions] = useState([])
-  const [isDNAModalOpen, setIsDNAModalOpen] = useState(false) // State for Modal
+  
+  // Modal States
+  const [isDNAModalOpen, setIsDNAModalOpen] = useState(false)
+  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false)
+  
   const containerRef = useRef(null)
 
   // Scroll Parallax for Hero Text
   const { scrollY } = useScroll()
   const y1 = useTransform(scrollY, [0, 500], [0, 200])
   const opacity = useTransform(scrollY, [0, 300], [1, 0])
+
+  // --- Scroll Locking Logic ---
+  useEffect(() => {
+    if (isDNAModalOpen || isTeamModalOpen) {
+      document.body.style.overflow = "hidden" // Lock scroll
+    } else {
+      document.body.style.overflow = "unset" // Unlock scroll
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isDNAModalOpen, isTeamModalOpen])
 
   // --- Configuration ---
   const techIcons = [
@@ -53,87 +52,61 @@ export default function AboutUs() {
   ]
 
   const services = [
-    {
-      icon: Brain,
-      title: "AI Agents",
-      description: "Autonomous digital agents that think, learn, and act.",
-    },
-    {
-      icon: Sparkles,
-      title: "Generative AI",
-      description: "Next-gen platforms using LLMs and RAG pipelines.",
-    },
-    {
-      icon: TrendingUp,
-      title: "Data Science",
-      description: "Predictive modeling and statistical intelligence.",
-    },
-    {
-      icon: Database,
-      title: "Data Annotation",
-      description: "High-quality labeled datasets for model training.",
-    },
-    {
-      icon: Zap,
-      title: "Workflow Intel",
-      description: "Automated, adaptive, and data-driven optimization.",
-    },
+    { icon: Brain, title: "AI Agents", description: "Autonomous digital agents that think, learn, and act." },
+    { icon: Sparkles, title: "Generative AI", description: "Next-gen platforms using LLMs and RAG pipelines." },
+    { icon: TrendingUp, title: "Data Science", description: "Predictive modeling and statistical intelligence." },
+    { icon: Database, title: "Data Annotation", description: "High-quality labeled datasets for model training." },
+    { icon: Zap, title: "Workflow Intel", description: "Automated, adaptive, and data-driven optimization." },
   ]
 
   const whyChoose = [
-    {
-      icon: Layers,
-      title: "End-to-End Intelligence",
-      description:
-        "From data collection to model deployment — a unified AI ecosystem built around your goals.",
-    },
-    {
-      icon: Sparkles,
-      title: "Cutting-Edge Innovation",
-      description:
-        "We leverage the latest in Generative AI, LLMs, and Machine Learning to craft future-ready solutions.",
-    },
-    {
-      icon: Shield,
-      title: "Ethics & Trust",
-      description:
-        "Transparency, data security, and fairness are at the heart of every system we build.",
-    },
-    {
-      icon: TrendingUp,
-      title: "Scalable Impact",
-      description:
-        "Our modular architecture ensures agility, adaptability, and growth at every stage.",
-    },
-    {
-      icon: Globe,
-      title: "Global Vision",
-      description:
-        "We blend global expertise with domain-specific intelligence for lasting impact.",
-    },
-    {
-      icon: CheckCircle2,
-      title: "Proven Reliability",
-      description:
-        "Enterprise-grade SLAs and rigorous testing ensure your AI systems never falter.",
-    },
+    { icon: Layers, title: "End-to-End Intelligence", description: "From data collection to model deployment — a unified AI ecosystem built around your goals." },
+    { icon: Sparkles, title: "Cutting-Edge Innovation", description: "We leverage the latest in Generative AI, LLMs, and Machine Learning to craft future-ready solutions." },
+    { icon: Shield, title: "Ethics & Trust", description: "Transparency, data security, and fairness are at the heart of every system we build." },
+    { icon: TrendingUp, title: "Scalable Impact", description: "Our modular architecture ensures agility, adaptability, and growth at every stage." },
+    { icon: Globe, title: "Global Vision", description: "We blend global expertise with domain-specific intelligence for lasting impact." },
+    { icon: CheckCircle2, title: "Proven Reliability", description: "Enterprise-grade SLAs and rigorous testing ensure your AI systems never falter." },
   ]
 
+  // --- Evenly Distributed Icon Logic ---
   useEffect(() => {
     setIsMounted(true)
-    // Generate scattered icons for the background
-    const icons = Array.from({ length: 20 }).map((_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      icon: techIcons[Math.floor(Math.random() * techIcons.length)],
-      delay: Math.random() * 5,
-      duration: 15 + Math.random() * 10,
-    }))
-    setIconPositions(icons)
+    
+    // Grid settings
+    const rows = 6
+    const cols = 4
+    const totalIcons = rows * cols
+    
+    const icons = []
+    
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        // Calculate grid cell base position (percentage)
+        const baseX = (c / cols) * 100
+        const baseY = (r / rows) * 100
+        
+        // Add "Jitter" (random offset within the cell)
+        // We use slightly less than the full cell width/height to prevent overlap
+        const jitterX = Math.random() * (100 / cols * 0.6) 
+        const jitterY = Math.random() * (100 / rows * 0.6)
+
+        icons.push({
+          id: `${r}-${c}`,
+          x: baseX + jitterX + 5, // +5 to add a little margin from edge
+          y: baseY + jitterY + 5,
+          icon: techIcons[Math.floor(Math.random() * techIcons.length)],
+          delay: Math.random() * 5,
+          duration: 15 + Math.random() * 10,
+        })
+      }
+    }
+    
+    // Optional: Shuffle the array so icons don't animate in a perfect line
+    const shuffledIcons = icons.sort(() => Math.random() - 0.5)
+    
+    setIconPositions(shuffledIcons)
   }, [])
 
-  // Variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
@@ -141,19 +114,13 @@ export default function AboutUs() {
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
   }
 
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-white overflow-hidden selection:bg-cyan-500/30">
       
-      {/* =====================================================================================
-          GLOBAL CONSTANT BACKGROUND (Fixed Layer)
-         ===================================================================================== */}
+      {/* GLOBAL CONSTANT BACKGROUND */}
       <div className="fixed inset-0 z-0 bg-gradient-to-br from-white via-sky-50 to-indigo-100 dark:from-[#0b1220] dark:via-[#0b1220]/90 dark:to-[#0b1220]">
         
         {/* Animated Orbs */}
@@ -171,14 +138,14 @@ export default function AboutUs() {
         {/* Grid Overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black,transparent)]" />
 
-        {/* Floating Tech Icons */}
+        {/* Evenly Spread Floating Tech Icons */}
         {isMounted &&
           iconPositions.map((pos) => (
             <motion.div
               key={pos.id}
               className={`absolute ${pos.icon.color} opacity-20 dark:opacity-10`}
               style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-              animate={{ y: [0, -50, 0], rotate: [0, 10, -10, 0] }}
+              animate={{ y: [0, -40, 0], rotate: [0, 10, -10, 0] }}
               transition={{
                 duration: pos.duration,
                 repeat: Infinity,
@@ -191,12 +158,10 @@ export default function AboutUs() {
           ))}
       </div>
 
-      {/* =====================================================================================
-          SCROLLABLE CONTENT
-         ===================================================================================== */}
+      {/* SCROLLABLE CONTENT */}
       <div className="relative z-10">
         
-        {/* --- HERO SECTION --- */}
+        {/* HERO SECTION */}
         <section className="min-h-screen flex flex-col justify-center items-center pt-20 pb-10">
           <motion.div
             style={{ y: y1, opacity }}
@@ -252,7 +217,7 @@ export default function AboutUs() {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col sm:flex-row gap-5 justify-center items-center"
             >
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all">
+              <button onClick={() => setIsTeamModalOpen(true)} className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden shadow-xl shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-105 active:scale-95 transition-all">
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 <div className="relative flex items-center gap-2">
                   Meet the Team{" "}
@@ -271,7 +236,7 @@ export default function AboutUs() {
           </motion.div>
         </section>
 
-        {/* --- WHO WE ARE --- */}
+        {/* WHO WE ARE */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -302,7 +267,7 @@ export default function AboutUs() {
           </div>
         </motion.section>
 
-        {/* --- WHAT WE DO --- */}
+        {/* WHAT WE DO */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -353,7 +318,7 @@ export default function AboutUs() {
           </div>
         </motion.section>
 
-        {/* --- VISION & MISSION --- */}
+        {/* VISION & MISSION */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -397,7 +362,7 @@ export default function AboutUs() {
           </div>
         </motion.section>
 
-        {/* --- WHY CHOOSE US --- */}
+        {/* WHY CHOOSE US */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -441,7 +406,7 @@ export default function AboutUs() {
           </div>
         </motion.section>
 
-        {/* --- OUR PROMISE --- */}
+        {/* OUR PROMISE */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -490,12 +455,18 @@ export default function AboutUs() {
         </motion.section>
       </div>
 
-      {/* --- DNA MODAL --- */}
+      {/* RENDER MODALS */}
       <AnimatePresence>
         {isDNAModalOpen && (
           <DNAModal
             isOpen={isDNAModalOpen}
             onClose={() => setIsDNAModalOpen(false)}
+          />
+        )}
+        {isTeamModalOpen && (
+          <TeamModal
+            isOpen={isTeamModalOpen}
+            onClose={() => setIsTeamModalOpen(false)}
           />
         )}
       </AnimatePresence>
