@@ -8,6 +8,9 @@ import Footer from "@/components/Footer"
 export const metadata = {
   title: "Cognixo.ai",
   description: "Created by Jayesh",
+  icons: {
+    icon: '/cognixo_logo.png', // This path points to public/logo.png
+  },
 }
 
 export default function RootLayout({ children }) {
