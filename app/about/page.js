@@ -7,17 +7,18 @@ import {
 } from "lucide-react"
 
 // Import Modals (Ensure these paths match your project structure)
-import DNAModal from "../../components/DNAModal" 
-import TeamModal from "../../components/TeamModal" 
+import DNAModal from "../../components/DNAModal"
+import TeamModal from "../../components/TeamModal"
+import Link from "next/link"
 
 export default function AboutUs() {
   const [isMounted, setIsMounted] = useState(false)
   const [iconPositions, setIconPositions] = useState([])
-  
+
   // Modal States
   const [isDNAModalOpen, setIsDNAModalOpen] = useState(false)
   const [isTeamModalOpen, setIsTeamModalOpen] = useState(false)
-  
+
   const containerRef = useRef(null)
 
   // Scroll Parallax for Hero Text
@@ -71,23 +72,23 @@ export default function AboutUs() {
   // --- Evenly Distributed Icon Logic ---
   useEffect(() => {
     setIsMounted(true)
-    
+
     // Grid settings
     const rows = 6
     const cols = 4
     const totalIcons = rows * cols
-    
+
     const icons = []
-    
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         // Calculate grid cell base position (percentage)
         const baseX = (c / cols) * 100
         const baseY = (r / rows) * 100
-        
+
         // Add "Jitter" (random offset within the cell)
         // We use slightly less than the full cell width/height to prevent overlap
-        const jitterX = Math.random() * (100 / cols * 0.6) 
+        const jitterX = Math.random() * (100 / cols * 0.6)
         const jitterY = Math.random() * (100 / rows * 0.6)
 
         icons.push({
@@ -100,10 +101,10 @@ export default function AboutUs() {
         })
       }
     }
-    
+
     // Optional: Shuffle the array so icons don't animate in a perfect line
     const shuffledIcons = icons.sort(() => Math.random() - 0.5)
-    
+
     setIconPositions(shuffledIcons)
   }, [])
 
@@ -119,24 +120,12 @@ export default function AboutUs() {
 
   return (
     <div className="relative min-h-screen text-slate-900 dark:text-white overflow-hidden selection:bg-cyan-500/30">
-      
-      {/* GLOBAL CONSTANT BACKGROUND */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-br from-white via-sky-50 to-indigo-100 dark:from-[#0b1220] dark:via-[#0b1220]/90 dark:to-[#0b1220]">
-        
-        {/* Animated Orbs */}
-        <motion.div
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 45, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] left-[-10%] w-[60vw] h-[60vw] bg-cyan-400/10 dark:bg-cyan-500/5 rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], rotate: [0, -45, 0] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
-          className="absolute bottom-[-10%] right-[-10%] w-[60vw] h-[60vw] bg-indigo-500/10 dark:bg-indigo-600/5 rounded-full blur-[120px]"
-        />
 
-        {/* Grid Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(99,102,241,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black,transparent)]" />
+      {/* GLOBAL CONSTANT BACKGROUND */}
+      {/* UPDATED: Removed "Animated Orbs" and "Grid Overlay" here.
+         This matches the cleaner aesthetic of your HeroSection.
+      */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-br from-white via-sky-50 to-indigo-100 dark:from-[#0b1220] dark:via-[#0b1220]/90 dark:to-[#0b1220]">
 
         {/* Evenly Spread Floating Tech Icons */}
         {isMounted &&
@@ -160,7 +149,7 @@ export default function AboutUs() {
 
       {/* SCROLLABLE CONTENT */}
       <div className="relative z-10">
-        
+
         {/* HERO SECTION */}
         <section className="min-h-screen flex flex-col justify-center items-center pt-20 pb-10">
           <motion.div
@@ -445,12 +434,15 @@ export default function AboutUs() {
               </motion.p>
             </motion.div>
 
-            <motion.button
-              variants={itemVariants}
-              className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-transform flex items-center gap-2 mx-auto"
-            >
-              Start Your AI Journey <ArrowRight size={20} />
-            </motion.button>
+            <Link href={'/contact'}>
+              <motion.button
+                variants={itemVariants}
+                className="px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold shadow-xl hover:scale-105 active:scale-95 transition-transform flex items-center gap-2 mx-auto"
+              >
+                Start Your AI Journey <ArrowRight size={20} />
+              </motion.button>
+
+            </Link>
           </div>
         </motion.section>
       </div>

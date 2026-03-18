@@ -9,7 +9,7 @@ export const metadata = {
   title: "Cognixo.ai",
   description: "Created by Jayesh",
   icons: {
-    icon: '/cognixo_logo.png', // This path points to public/logo.png
+    icon: '/icon.png', // This path points to public/logo.png
   },
 }
 

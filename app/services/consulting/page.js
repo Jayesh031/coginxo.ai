@@ -22,6 +22,7 @@ import {
   BookOpen,
   Activity
 } from "lucide-react";
+import Link from "next/link";
 
 export default function ConsultingPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -342,9 +343,9 @@ export default function ConsultingPage() {
               <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10">
                 Schedule a discovery call to identify the highest-impact opportunities for your organization.
               </p>
-              <button className="px-10 py-4 bg-white text-blue-700 font-bold rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+              <Link href={'/contact'} className="px-10 py-4 bg-white text-blue-700 font-bold rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
                 Book a Discovery Call
-              </button>
+              </Link>
             </div>
         </div>
       </section>

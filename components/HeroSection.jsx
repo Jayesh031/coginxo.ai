@@ -13,6 +13,7 @@ import {
   Zap,
   Activity,
 } from "lucide-react"
+import Link from "next/link"
 
 const HeroSection = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -125,15 +126,6 @@ const HeroSection = () => {
         
         {/* LEFT COLUMN */}
         <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left space-y-8">
-          
-          {/* Badge: Added Dark Mode Styles */}
-          {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 dark:bg-slate-800/60 border border-blue-200 dark:border-blue-700/50 text-blue-600 dark:text-blue-300 text-sm font-medium animate-fade-in shadow-sm backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            v2.0 Now Available
-          </div> */}
 
           {/* Heading: Added Dark Mode Text Colors */}
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1]">
@@ -151,18 +143,18 @@ const HeroSection = () => {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden transition-all hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 active:scale-95">
+            <Link href={'/contact'} className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-700 text-white font-bold rounded-xl overflow-hidden transition-all hover:shadow-xl hover:shadow-blue-500/30 hover:scale-105 active:scale-95">
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
               <div className="relative flex items-center justify-center gap-2">
                 Start Building
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </div>
-            </button>
+            </Link>
             
-            <button className="px-8 py-4 bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-white dark:hover:bg-slate-700 hover:border-blue-300 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm backdrop-blur-sm">
+            {/* <button className="px-8 py-4 bg-white/60 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-semibold rounded-xl hover:bg-white dark:hover:bg-slate-700 hover:border-blue-300 transition-all active:scale-95 flex items-center justify-center gap-2 shadow-sm backdrop-blur-sm">
               <Terminal className="w-5 h-5 text-slate-500 dark:text-slate-400" />
               View Documentation
-            </button>
+            </button> */}
           </div>
 
           {/* Metrics: Added Dark Mode Text Colors */}

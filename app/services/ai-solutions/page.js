@@ -28,6 +28,7 @@ import {
   Rocket,
   Workflow
 } from "lucide-react";
+import Link from "next/link";
 
 export default function AISolutions() {
   const [isMounted, setIsMounted] = useState(false);
@@ -266,8 +267,8 @@ export default function AISolutions() {
             <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
           </a>
           
-          <a href="/services" className="px-8 py-4 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-semibold shadow-md hover:bg-white/90 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-300">
-            View Case Studies
+          <a href="/about" className="px-8 py-4 rounded-full bg-white/70 dark:bg-slate-800/70 backdrop-blur-md border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white font-semibold shadow-md hover:bg-white/90 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-300">
+            Know more about us
           </a>
         </motion.div>
 
@@ -366,9 +367,9 @@ export default function AISolutions() {
               <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-10">
                 Let's discuss how we can integrate these solutions into your existing infrastructure today.
               </p>
-              <button className="px-10 py-4 bg-white text-blue-700 font-bold rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+              <Link href={'/contact'} className="px-10 py-4 bg-white text-blue-700 font-bold rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
                 Book a Free Consultation
-              </button>
+              </Link>
             </div>
         </div>
       </section>
